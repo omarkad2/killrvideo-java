@@ -1,13 +1,5 @@
 package com.killrvideo.service.statistic.dao;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
-
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.ConsistencyLevel;
 import com.datastax.driver.core.PreparedStatement;
@@ -16,8 +8,14 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.dse.DseSession;
 import com.datastax.driver.mapping.Mapper;
 import com.killrvideo.dse.dao.DseDaoSupport;
-import com.killrvideo.service.statistic.dto.VideoPlaybackStats;
+import com.killrvideo.dse.dto.VideoPlaybackStats;
 import com.killrvideo.utils.FutureUtils;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 /**
  * Implementations of operation for Videos.
@@ -27,9 +25,6 @@ import com.killrvideo.utils.FutureUtils;
 @Repository
 public class StatisticsDseDao extends DseDaoSupport {
 
-    /** Table Names. */
-    public static final String TABLENAME_PLAYBACK_STATS = "video_playback_stats";
-    
     /** Mapper to ease queries. */
     protected  Mapper< VideoPlaybackStats > mappervideoPlaybackStats;
     

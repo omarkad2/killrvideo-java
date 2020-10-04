@@ -6,29 +6,20 @@ import static com.killrvideo.service.user.grpc.UserManagementServiceGrpcValidato
 import static com.killrvideo.service.user.grpc.UserManagementServiceGrpcValidator.validateGrpcRequest_createUser;
 import static com.killrvideo.service.user.grpc.UserManagementServiceGrpcValidator.validateGrpcRequest_getUserProfile;
 
+import com.google.protobuf.Timestamp;
+import com.killrvideo.dse.dto.User;
+import com.killrvideo.dse.dto.UserCredentials;
+import com.killrvideo.messaging.dao.MessagingDao;
+import com.killrvideo.service.user.dao.UserDseDao;
+import com.killrvideo.utils.HashUtils;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import com.google.protobuf.Timestamp;
-import com.killrvideo.messaging.dao.MessagingDao;
-import com.killrvideo.service.user.dao.UserDseDao;
-import com.killrvideo.service.user.dto.User;
-import com.killrvideo.service.user.dto.UserCredentials;
-import com.killrvideo.utils.HashUtils;
-
-import io.grpc.Status;
-import io.grpc.stub.StreamObserver;
 import killrvideo.user_management.UserManagementServiceGrpc.UserManagementServiceImplBase;
 import killrvideo.user_management.UserManagementServiceOuterClass.CreateUserRequest;
 import killrvideo.user_management.UserManagementServiceOuterClass.CreateUserResponse;
@@ -37,6 +28,12 @@ import killrvideo.user_management.UserManagementServiceOuterClass.GetUserProfile
 import killrvideo.user_management.UserManagementServiceOuterClass.VerifyCredentialsRequest;
 import killrvideo.user_management.UserManagementServiceOuterClass.VerifyCredentialsResponse;
 import killrvideo.user_management.events.UserManagementEvents.UserCreated;
+import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * Create or update users.
@@ -77,7 +74,7 @@ public class UserManagementServiceGrpc extends UserManagementServiceImplBase {
         User user = mapUserRequest2User(grpcReq);
         final String hashedPassword = HashUtils.hashPassword(grpcReq.getPassword().trim());
         
-         // Invoke DAO Async
+        // Invoke DAO Async
         userDseDao.createUserAsync(user, hashedPassword).whenComplete((result, error) -> {
             if (error != null ) {
                 traceError("createUser", starts, error);

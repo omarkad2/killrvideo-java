@@ -1,4 +1,4 @@
-package com.killrvideo.service.video.dto;
+package com.killrvideo.dse.dto;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,7 @@
-package com.killrvideo.service.comment.dto;
+package com.killrvideo.dse.dto;
 
 import java.util.Optional;
 import java.util.UUID;
-
-import com.killrvideo.dse.dto.QueryDefinition;
 
 /**
  * Query to search comments for a User.

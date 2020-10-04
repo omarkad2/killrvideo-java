@@ -9,24 +9,21 @@ import static com.killrvideo.utils.GrpcMappingUtils.uuidToTimeUuid;
 import static com.killrvideo.utils.GrpcMappingUtils.uuidToUuid;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import com.killrvideo.dse.dto.Comment;
+import com.killrvideo.dse.dto.QueryCommentByUser;
+import com.killrvideo.dse.dto.QueryCommentByVideo;
+import com.killrvideo.dse.dto.ResultListPage;
+import io.grpc.stub.StreamObserver;
 import java.util.Optional;
 import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.springframework.util.Assert;
-
-import com.killrvideo.dse.dto.ResultListPage;
-import com.killrvideo.service.comment.dto.Comment;
-import com.killrvideo.service.comment.dto.QueryCommentByUser;
-import com.killrvideo.service.comment.dto.QueryCommentByVideo;
-
-import io.grpc.stub.StreamObserver;
 import killrvideo.comments.CommentsServiceOuterClass;
 import killrvideo.comments.CommentsServiceOuterClass.CommentOnVideoRequest;
 import killrvideo.comments.CommentsServiceOuterClass.GetUserCommentsRequest;
 import killrvideo.comments.CommentsServiceOuterClass.GetUserCommentsResponse;
 import killrvideo.comments.CommentsServiceOuterClass.GetVideoCommentsRequest;
 import killrvideo.comments.CommentsServiceOuterClass.GetVideoCommentsResponse;
+import org.slf4j.Logger;
+import org.springframework.util.Assert;
 
 /**
  * Validation of inputs and mapping

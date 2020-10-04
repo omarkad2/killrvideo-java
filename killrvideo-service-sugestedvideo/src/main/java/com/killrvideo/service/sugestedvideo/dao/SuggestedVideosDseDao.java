@@ -1,36 +1,12 @@
 package com.killrvideo.service.sugestedvideo.dao;
 
-import java.time.Instant;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
-
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.PagingState;
 import com.datastax.driver.core.PreparedStatement;
-import com.datastax.driver.core.RegularStatement;
-import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.dse.DseSession;
 import com.datastax.driver.dse.graph.GraphNode;
 import com.datastax.driver.dse.graph.GraphResultSet;
 import com.datastax.driver.dse.graph.GraphStatement;
-import com.datastax.driver.dse.graph.Vertex;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.Result;
 import com.datastax.dse.graph.api.DseGraph;
 import com.google.common.collect.Sets;
 import com.killrvideo.dse.dao.DseDaoSupport;
@@ -42,6 +18,23 @@ import com.killrvideo.dse.graph.KillrVideoTraversalSource;
 import com.killrvideo.dse.graph.__;
 import com.killrvideo.dse.utils.DseUtils;
 import com.killrvideo.utils.FutureUtils;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import org.apache.tinkerpop.gremlin.structure.io.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 /**
  * Implementations of operation for Videos.
@@ -97,26 +90,27 @@ public class SuggestedVideosDseDao extends DseDaoSupport implements KillrVideoTr
     /** {@inheritDoc} */
     @Override
     protected void initialize() {
-        mapperVideo = mappingManager.mapper(Video.class);
-        String keyspaceVideo   = mapperVideo.getTableMetadata().getKeyspace().getName();
-        String tableNameVideo  = mapperVideo.getTableMetadata().getName();
-        RegularStatement queryFindRelatedVideos = QueryBuilder
-                .select().all()
-                .from(keyspaceVideo, tableNameVideo)
-                .where(QueryBuilder.eq(SOLR_QUERY, QueryBuilder.bindMarker()));
-        findRelatedVideos = dseSession.prepare(queryFindRelatedVideos);
+//        mapperVideo = mappingManager.mapper(Video.class);
+//        String keyspaceVideo   = mapperVideo.getTableMetadata().getKeyspace().getName();
+//        String tableNameVideo  = mapperVideo.getTableMetadata().getName();
+//        RegularStatement queryFindRelatedVideos = QueryBuilder
+//                .select().all()
+//                .from(keyspaceVideo, tableNameVideo)
+//                .where(QueryBuilder.eq(SOLR_QUERY, QueryBuilder.bindMarker()));
+//        findRelatedVideos = dseSession.prepare(queryFindRelatedVideos);
     }
     
     /**
      * Get Pageable result for related video.
      **/
     public CompletableFuture< ResultListPage<Video> > getRelatedVideos(UUID videoId, int fetchSize, Optional<String> pagingState) {
-        CompletableFuture<Result<Video>> relatedVideosFuture = findVideoById(videoId).thenCompose(video -> {
-            BoundStatement stmt = createStatementToSearchVideos(video, fetchSize, pagingState);
-            return FutureUtils.asCompletableFuture(mapperVideo.mapAsync(dseSession.executeAsync(stmt)));
-        });
-        // so far I got a Result<Video> async, need to fetch only expected page and save paging state
-        return relatedVideosFuture.< ResultListPage<Video> > thenApply(ResultListPage::new);
+//        CompletableFuture<Result<Video>> relatedVideosFuture = findVideoById(videoId).thenCompose(video -> {
+//            BoundStatement stmt = createStatementToSearchVideos(video, fetchSize, pagingState);
+//            return FutureUtils.asCompletableFuture(mapperVideo.mapAsync(dseSession.executeAsync(stmt)));
+//        });
+//        // so far I got a Result<Video> async, need to fetch only expected page and save paging state
+//        return relatedVideosFuture.< ResultListPage<Video> > thenApply(ResultListPage::new);
+        return null;
     }
     
     /**
@@ -141,7 +135,7 @@ public class SuggestedVideosDseDao extends DseDaoSupport implements KillrVideoTr
         }
         
         // Execute Sync
-        CompletableFuture<GraphResultSet> futureRs = 
+        CompletableFuture<GraphResultSet> futureRs =
                 FutureUtils.asCompletableFuture(dseSession.executeGraphAsync(graphStatement));
         
        // Mapping to expected List
@@ -289,20 +283,22 @@ public class SuggestedVideosDseDao extends DseDaoSupport implements KillrVideoTr
     }
     
     private Video mapGraphNode2Video(GraphNode node) {
-        Vertex v = node.get(VERTEX_VIDEO).asVertex();
-        Vertex u = node.get(VERTEX_USER).asVertex();
-        Video video = new Video();
-        video.setAddedDate(Date.from(v.getProperty("added_date").getValue().as(Instant.class)));
-        video.setName(v.getProperty("name").getValue().asString());
-        video.setPreviewImageLocation(v.getProperty("preview_image_location").getValue().asString());
-        video.setVideoid(v.getId().get("videoId").as(UUID.class));
-        video.setUserid(u.getId().get("userId").as(UUID.class));
-        return video;
+//        Vertex v = node.get(VERTEX_VIDEO).asVertex();
+//        Vertex u = node.get(VERTEX_USER).asVertex();
+//        Video video = new Video();
+//        video.setAddedDate(Date.from(v.getProperty("added_date").getValue().as(Instant.class)));
+//        video.setName(v.getProperty("name").getValue().asString());
+//        video.setPreviewImageLocation(v.getProperty("preview_image_location").getValue().asString());
+//        video.setVideoid(v.getId().get("videoId").as(UUID.class));
+//        video.setUserid(u.getId().get("userId").as(UUID.class));
+//        return video;
+        return null;
     }
     
     private CompletableFuture<Video> findVideoById(UUID videoId) {
-       Assert.notNull(videoId, "videoid is required to update statistics");
-       return FutureUtils.asCompletableFuture(mapperVideo.getAsync(videoId));
+//       Assert.notNull(videoId, "videoid is required to update statistics");
+//       return FutureUtils.asCompletableFuture(mapperVideo.getAsync(videoId));
+        return null;
     }
     
     /**

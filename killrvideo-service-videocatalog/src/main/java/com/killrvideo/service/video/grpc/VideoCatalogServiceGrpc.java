@@ -10,6 +10,15 @@ import static com.killrvideo.service.video.grpc.VideoCatalogServiceGrpcValidator
 import static com.killrvideo.service.video.grpc.VideoCatalogServiceGrpcValidator.validateGrpcRequest_submitYoutubeVideo;
 import static java.util.stream.Collectors.toList;
 
+import com.google.protobuf.Timestamp;
+import com.killrvideo.dse.dto.CustomPagingState;
+import com.killrvideo.dse.dto.LatestVideosPage;
+import com.killrvideo.dse.dto.Video;
+import com.killrvideo.messaging.dao.MessagingDao;
+import com.killrvideo.service.video.dao.VideoCatalogDseDao;
+import com.killrvideo.utils.GrpcMappingUtils;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collections;
@@ -18,25 +27,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import com.google.protobuf.Timestamp;
-import com.killrvideo.dse.dto.CustomPagingState;
-import com.killrvideo.dse.dto.Video;
-import com.killrvideo.messaging.dao.MessagingDao;
-import com.killrvideo.service.video.dao.VideoCatalogDseDao;
-import com.killrvideo.service.video.dto.LatestVideosPage;
-import com.killrvideo.utils.GrpcMappingUtils;
-
-import io.grpc.Status;
-import io.grpc.stub.StreamObserver;
 import killrvideo.common.CommonTypes.Uuid;
 import killrvideo.video_catalog.VideoCatalogServiceGrpc.VideoCatalogServiceImplBase;
 import killrvideo.video_catalog.VideoCatalogServiceOuterClass.GetLatestVideoPreviewsRequest;
@@ -50,6 +40,13 @@ import killrvideo.video_catalog.VideoCatalogServiceOuterClass.GetVideoResponse;
 import killrvideo.video_catalog.VideoCatalogServiceOuterClass.SubmitYouTubeVideoRequest;
 import killrvideo.video_catalog.VideoCatalogServiceOuterClass.SubmitYouTubeVideoResponse;
 import killrvideo.video_catalog.events.VideoCatalogEvents.YouTubeVideoAdded;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /*
  * Exposition of comment services with GPRC Technology & Protobuf Interface

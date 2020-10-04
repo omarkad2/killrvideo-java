@@ -1,16 +1,12 @@
-package com.killrvideo.service.comment.dto;
+package com.killrvideo.dse.dto;
 
 import java.util.Date;
 import java.util.UUID;
-
 import javax.validation.constraints.NotNull;
-
+import ma.markware.charybdis.model.annotation.ClusteringKey;
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.CreationDate;
 import org.hibernate.validator.constraints.Length;
-
-import com.datastax.driver.mapping.annotations.ClusteringColumn;
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.Computed;
-import com.killrvideo.dse.dto.AbstractEntity;
 
 /**
  * Bean standing for comment on video.
@@ -28,15 +24,17 @@ public class Comment extends AbstractEntity {
     public static final String COLUMN_COMMENTID = "commentid";
     public static final String COLUMN_COMMENT   = "comment";
 
-    @Column @NotNull
+    @Column
+    @NotNull
     protected UUID userid;
     
     @NotNull
     @Column
     protected UUID videoid;
 
+    @Column
+    @ClusteringKey
     @NotNull
-    @ClusteringColumn
     protected UUID commentid;
 
     @Length(min = 1, message = "The comment must not be empty")
@@ -44,7 +42,7 @@ public class Comment extends AbstractEntity {
     protected String comment;
 
     @NotNull
-    @Computed("toTimestamp(commentid)")
+    @CreationDate
     private Date dateOfComment;
     
     /**

@@ -1,23 +1,20 @@
-package com.killrvideo.service.statistic.dto;
+package com.killrvideo.dse.dto;
 
+import com.killrvideo.model.CommonConstants;
 import java.io.Serializable;
 import java.util.UUID;
-
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
-import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.statistic.dao.StatisticsDseDao;
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
 
 /**
  * Pojo representing DTO for table 'video_playback_stats'.
  *
  * @author DataStax Developer Advocates team.
  */
-@Table(keyspace = 
+@Table(keyspace =
         CommonConstants.KILLRVIDEO_KEYSPACE, 
-       name = 
-        StatisticsDseDao.TABLENAME_PLAYBACK_STATS)
+       name = "video_playback_stats")
 public class VideoPlaybackStats implements Serializable {
 
     /** Serial. */
@@ -27,6 +24,7 @@ public class VideoPlaybackStats implements Serializable {
     public static final String COLUMN_VIDEOID   = "videoid";
     public static final String COLUMN_VIEWS     = "views";
 
+    @Column
     @PartitionKey
     private UUID videoid;
 

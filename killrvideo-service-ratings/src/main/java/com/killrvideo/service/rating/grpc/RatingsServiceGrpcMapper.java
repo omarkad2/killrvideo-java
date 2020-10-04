@@ -2,11 +2,9 @@ package com.killrvideo.service.rating.grpc;
 
 import static com.killrvideo.utils.GrpcMappingUtils.uuidToUuid;
 
+import com.killrvideo.dse.dto.VideoRating;
+import com.killrvideo.dse.dto.VideoRatingByUser;
 import java.util.Optional;
-
-import com.killrvideo.service.rating.dto.VideoRating;
-import com.killrvideo.service.rating.dto.VideoRatingByUser;
-
 import killrvideo.ratings.RatingsServiceOuterClass.GetRatingResponse;
 import killrvideo.ratings.RatingsServiceOuterClass.GetUserRatingResponse;
 

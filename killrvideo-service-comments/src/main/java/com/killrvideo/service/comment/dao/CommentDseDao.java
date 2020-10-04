@@ -1,24 +1,10 @@
 package com.killrvideo.service.comment.dao;
 
 
-import static com.killrvideo.service.comment.dto.Comment.COLUMN_COMMENT;
-import static com.killrvideo.service.comment.dto.Comment.COLUMN_COMMENTID;
-import static com.killrvideo.service.comment.dto.Comment.COLUMN_USERID;
-import static com.killrvideo.service.comment.dto.Comment.COLUMN_VIDEOID;
-
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.IntStream;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
+import static com.killrvideo.dse.dto.Comment.COLUMN_COMMENT;
+import static com.killrvideo.dse.dto.Comment.COLUMN_COMMENTID;
+import static com.killrvideo.dse.dto.Comment.COLUMN_USERID;
+import static com.killrvideo.dse.dto.Comment.COLUMN_VIDEOID;
 
 import com.datastax.driver.core.BatchStatement;
 import com.datastax.driver.core.BoundStatement;
@@ -39,13 +25,24 @@ import com.datastax.driver.mapping.annotations.Query;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.killrvideo.dse.dao.DseDaoSupport;
+import com.killrvideo.dse.dto.Comment;
+import com.killrvideo.dse.dto.CommentByUser;
+import com.killrvideo.dse.dto.CommentByVideo;
+import com.killrvideo.dse.dto.QueryCommentByUser;
+import com.killrvideo.dse.dto.QueryCommentByVideo;
 import com.killrvideo.dse.dto.ResultListPage;
-import com.killrvideo.service.comment.dto.Comment;
-import com.killrvideo.service.comment.dto.CommentByUser;
-import com.killrvideo.service.comment.dto.CommentByVideo;
-import com.killrvideo.service.comment.dto.QueryCommentByUser;
-import com.killrvideo.service.comment.dto.QueryCommentByVideo;
 import com.killrvideo.utils.FutureUtils;
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.IntStream;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 /**
  * Implementation of queries and related to {@link Comment} objects within DataStax Enterprise.
@@ -58,10 +55,6 @@ public class CommentDseDao extends DseDaoSupport {
 
     /** Logger for that class. */
     private static Logger LOGGER = LoggerFactory.getLogger(CommentDseDao.class);
-    
-    /** Data Modelling. */
-    public static final String TABLENAME_COMMENTS_BY_VIDEO  = "comments_by_video";
-    public static final String TABLENAME_COMMENTS_BY_USER   = "comments_by_user";
     
     /** Mapper to ease queries. */
     protected Mapper < CommentByUser >  mapperCommentByUser;

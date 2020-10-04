@@ -3,16 +3,14 @@ package com.killrvideo.service.video.grpc;
 import static com.killrvideo.utils.GrpcMappingUtils.dateToTimestamp;
 import static com.killrvideo.utils.GrpcMappingUtils.uuidToUuid;
 
+import com.google.common.collect.Sets;
+import com.killrvideo.dse.dto.LatestVideo;
+import com.killrvideo.dse.dto.LatestVideosPage;
+import com.killrvideo.dse.dto.UserVideo;
+import com.killrvideo.dse.dto.Video;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.Sets;
-import com.killrvideo.dse.dto.Video;
-import com.killrvideo.service.video.dto.LatestVideo;
-import com.killrvideo.service.video.dto.LatestVideosPage;
-import com.killrvideo.service.video.dto.UserVideo;
-
 import killrvideo.video_catalog.VideoCatalogServiceOuterClass.GetLatestVideoPreviewsResponse;
 import killrvideo.video_catalog.VideoCatalogServiceOuterClass.GetVideoResponse;
 import killrvideo.video_catalog.VideoCatalogServiceOuterClass.SubmitYouTubeVideoRequest;

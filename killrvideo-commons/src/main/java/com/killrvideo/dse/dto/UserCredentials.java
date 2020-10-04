@@ -1,26 +1,22 @@
-package com.killrvideo.service.user.dto;
+package com.killrvideo.dse.dto;
 
+import com.killrvideo.model.CommonConstants;
 import java.io.Serializable;
 import java.util.UUID;
-
 import javax.validation.constraints.NotNull;
-
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
 import org.hibernate.validator.constraints.Length;
-
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
-import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.user.dao.UserDseDao;
 
 /**
  * Pojo representing DTO for table 'user_credentials'
  *
  * @author DataStax Developer Advocates team.
  */
-@Table(keyspace = 
+@Table(keyspace =
         CommonConstants.KILLRVIDEO_KEYSPACE, 
-       name = UserDseDao.TABLENAME_USER_CREDENTIALS)
+       name = "user_credentials")
 public class UserCredentials implements Serializable {
 
     /** Serial. */
@@ -31,6 +27,7 @@ public class UserCredentials implements Serializable {
     public static final String COLUMN_PASSWORD  = "password";
     public static final String COLUMN_EMAIL     = "email";
 
+    @Column
     @PartitionKey
     private String email;
 

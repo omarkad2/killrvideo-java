@@ -1,19 +1,16 @@
 package com.killrvideo.service.statistic.grpc;
 
+import com.killrvideo.dse.dto.VideoPlaybackStats;
+import com.killrvideo.utils.GrpcMappingUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
-
-import com.killrvideo.service.statistic.dto.VideoPlaybackStats;
-import com.killrvideo.utils.GrpcMappingUtils;
-
 import killrvideo.common.CommonTypes.Uuid;
 import killrvideo.statistics.StatisticsServiceOuterClass.GetNumberOfPlaysRequest;
 import killrvideo.statistics.StatisticsServiceOuterClass.GetNumberOfPlaysResponse;
 import killrvideo.statistics.StatisticsServiceOuterClass.PlayStats;
+import org.springframework.stereotype.Component;
 
 /**
  * Helper and mappers for DAO <=> GRPC Communications

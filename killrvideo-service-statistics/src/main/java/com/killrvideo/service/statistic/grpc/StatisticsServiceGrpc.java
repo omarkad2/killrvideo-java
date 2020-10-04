@@ -4,30 +4,27 @@ import static com.killrvideo.service.statistic.grpc.StatisticsServiceGrpcMapper.
 import static com.killrvideo.service.statistic.grpc.StatisticsServiceGrpcValidator.validateGrpcRequest_GetNumberPlays;
 import static com.killrvideo.service.statistic.grpc.StatisticsServiceGrpcValidator.validateGrpcRequest_RecordPlayback;
 
+import com.killrvideo.dse.dto.VideoPlaybackStats;
+import com.killrvideo.service.statistic.dao.StatisticsDseDao;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import com.killrvideo.service.statistic.dao.StatisticsDseDao;
-import com.killrvideo.service.statistic.dto.VideoPlaybackStats;
-
-import io.grpc.Status;
-import io.grpc.stub.StreamObserver;
 import killrvideo.common.CommonTypes.Uuid;
 import killrvideo.statistics.StatisticsServiceGrpc.StatisticsServiceImplBase;
 import killrvideo.statistics.StatisticsServiceOuterClass.GetNumberOfPlaysRequest;
 import killrvideo.statistics.StatisticsServiceOuterClass.GetNumberOfPlaysResponse;
 import killrvideo.statistics.StatisticsServiceOuterClass.RecordPlaybackStartedRequest;
 import killrvideo.statistics.StatisticsServiceOuterClass.RecordPlaybackStartedResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * Get statistics on a video.

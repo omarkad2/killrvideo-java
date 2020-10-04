@@ -1,31 +1,26 @@
 package com.killrvideo.dse.dto;
 
+import com.killrvideo.dse.utils.EmptyCollectionIfNull;
+import com.killrvideo.model.CommonConstants;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
-
 import javax.validation.constraints.NotNull;
-
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
 import org.hibernate.validator.constraints.Length;
-
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
-import com.killrvideo.dse.utils.EmptyCollectionIfNull;
-import com.killrvideo.model.CommonConstants;
 
 /**
  * Pojo representing DTO for table 'videos'.
  *
  * @author DataStax Developer Advocates team.
  */
-@Table(keyspace = CommonConstants.KILLRVIDEO_KEYSPACE, name = Video.TABLENAME_VIDEOS)
+@Table(keyspace = CommonConstants.KILLRVIDEO_KEYSPACE, name = "videos")
 public class Video extends AbstractVideo {
 
     /** Serial. */
     private static final long serialVersionUID = 7035802926837646137L;
-    
-    public static final String TABLENAME_VIDEOS = "videos";
     
     /** Column names in the DB. */
     public static final String COLUMN_USERID       = "userid";
@@ -34,7 +29,8 @@ public class Video extends AbstractVideo {
     public static final String COLUMN_LOCATION     = "location";
     public static final String COLUMN_LOCATIONTYPE = "location_type";
     public static final String COLUMN_ADDED_DATE   = "added_date";
-    
+
+    @Column
     @PartitionKey
     private UUID videoid;
 

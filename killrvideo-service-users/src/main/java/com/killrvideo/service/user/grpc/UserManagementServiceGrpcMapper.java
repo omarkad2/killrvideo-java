@@ -1,11 +1,9 @@
 package com.killrvideo.service.user.grpc;
 
+import com.killrvideo.dse.dto.User;
+import com.killrvideo.utils.GrpcMappingUtils;
 import java.util.Date;
 import java.util.UUID;
-
-import com.killrvideo.service.user.dto.User;
-import com.killrvideo.utils.GrpcMappingUtils;
-
 import killrvideo.user_management.UserManagementServiceOuterClass.CreateUserRequest;
 import killrvideo.user_management.UserManagementServiceOuterClass.UserProfile;
 import killrvideo.user_management.UserManagementServiceOuterClass.VerifyCredentialsResponse;

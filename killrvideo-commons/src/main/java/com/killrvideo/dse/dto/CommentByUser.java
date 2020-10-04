@@ -1,19 +1,17 @@
-package com.killrvideo.service.comment.dto;
+package com.killrvideo.dse.dto;
 
-import java.util.UUID;
-
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
 import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.comment.dao.CommentDseDao;
+import java.util.UUID;
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
 
 /**
  * Specialization for USER.
  *
  * @author DataStax Developer Advocates team.
  */
-@Table(name=
-           CommentDseDao.TABLENAME_COMMENTS_BY_USER,
+@Table(name= "comments_by_user",
        keyspace=
            CommonConstants.KILLRVIDEO_KEYSPACE)
 public class CommentByUser extends Comment {
@@ -44,6 +42,7 @@ public class CommentByUser extends Comment {
      * @return
      *       current value of 'userid'
      */
+    @Column
     @PartitionKey
     public UUID getUserid() {
         return userid;

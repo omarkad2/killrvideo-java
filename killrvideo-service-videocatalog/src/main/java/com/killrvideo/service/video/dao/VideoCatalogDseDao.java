@@ -1,5 +1,25 @@
 package com.killrvideo.service.video.dao;
 
+import com.datastax.driver.core.BatchStatement;
+import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.ConsistencyLevel;
+import com.datastax.driver.core.PagingState;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.querybuilder.QueryBuilder;
+import com.datastax.driver.dse.DseSession;
+import com.datastax.driver.mapping.Mapper;
+import com.datastax.driver.mapping.Result;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.killrvideo.dse.dao.DseDaoSupport;
+import com.killrvideo.dse.dto.CustomPagingState;
+import com.killrvideo.dse.dto.LatestVideo;
+import com.killrvideo.dse.dto.LatestVideosPage;
+import com.killrvideo.dse.dto.ResultListPage;
+import com.killrvideo.dse.dto.UserVideo;
+import com.killrvideo.dse.dto.Video;
+import com.killrvideo.utils.FutureUtils;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -15,35 +35,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
-
 import javax.annotation.PostConstruct;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
-
-import com.datastax.driver.core.BatchStatement;
-import com.datastax.driver.core.BoundStatement;
-import com.datastax.driver.core.ConsistencyLevel;
-import com.datastax.driver.core.PagingState;
-import com.datastax.driver.core.PreparedStatement;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.querybuilder.QueryBuilder;
-import com.datastax.driver.dse.DseSession;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.Result;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.killrvideo.dse.dao.DseDaoSupport;
-import com.killrvideo.dse.dto.CustomPagingState;
-import com.killrvideo.dse.dto.ResultListPage;
-import com.killrvideo.dse.dto.Video;
-import com.killrvideo.service.video.dto.LatestVideo;
-import com.killrvideo.service.video.dto.LatestVideosPage;
-import com.killrvideo.service.video.dto.UserVideo;
-import com.killrvideo.utils.FutureUtils;
 
 /**
  * Implementations of operation for Videos.
@@ -61,10 +58,6 @@ public class VideoCatalogDseDao extends DseDaoSupport {
     /** Formatting date. */
     public static final SimpleDateFormat  SDF           = new SimpleDateFormat("yyyyMMdd");
     public static final DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
-    
-    /** Table Name of Latest Video. */
-    public static final String TABLENAME_LATEST_VIDEOS = "latest_videos";
-    public static final String TABLENAME_USER_VIDEOS   = "user_videos";
     
     /** Loger for that class. */
     private static Logger LOGGER = LoggerFactory.getLogger(VideoCatalogDseDao.class);

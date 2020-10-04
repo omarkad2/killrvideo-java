@@ -2,14 +2,6 @@ package com.killrvideo.service.rating.dao;
 
 import static com.datastax.driver.core.querybuilder.QueryBuilder.update;
 
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.ConsistencyLevel;
 import com.datastax.driver.core.PreparedStatement;
@@ -18,9 +10,15 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.dse.DseSession;
 import com.datastax.driver.mapping.Mapper;
 import com.killrvideo.dse.dao.DseDaoSupport;
-import com.killrvideo.service.rating.dto.VideoRating;
-import com.killrvideo.service.rating.dto.VideoRatingByUser;
+import com.killrvideo.dse.dto.VideoRating;
+import com.killrvideo.dse.dto.VideoRatingByUser;
 import com.killrvideo.utils.FutureUtils;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 /**
  * Implementations of operation for Videos.
@@ -33,10 +31,6 @@ public class RatingDseDao extends DseDaoSupport {
 	/** Logger for that class. */
     private static Logger LOGGER = LoggerFactory.getLogger(RatingDseDao.class);
     
-    /** Dse Data Model concerns. */
-    public static final String TABLENAME_VIDEOS_RATINGS         = "video_ratings";
-    public static final String TABLENAME_VIDEOS_RATINGS_BYUSER  = "video_ratings_by_user";
-   
     /** Mapper to ease queries. */
     protected Mapper < VideoRating >       mapperVideoRating;
     protected Mapper < VideoRatingByUser > mapperVideoRatingByUser;

@@ -1,21 +1,19 @@
-package com.killrvideo.service.video.dto;
+package com.killrvideo.dse.dto;
 
+import com.killrvideo.model.CommonConstants;
 import java.util.Date;
 import java.util.UUID;
-
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
-import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.video.dao.VideoCatalogDseDao;
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
 
 /**
  * Pojo representing DTO for table 'latest_videos'
  *
  * @author DataStax Developer Advocates team.
  */
-@Table(keyspace = CommonConstants.KILLRVIDEO_KEYSPACE, 
-    name = VideoCatalogDseDao.TABLENAME_LATEST_VIDEOS)
+@Table(keyspace = CommonConstants.KILLRVIDEO_KEYSPACE,
+    name = "latest_videos")
 public class LatestVideo extends VideoPreview {
 
     /** Serial. */
@@ -24,7 +22,8 @@ public class LatestVideo extends VideoPreview {
     /** Column names in the DB. */
     public static final String COLUMN_USERID   = "userid";
     public static final String COLUMN_YYYYMMDD = "yyyymmdd";
-    
+
+    @Column
     @PartitionKey
     private String yyyymmdd;
 
