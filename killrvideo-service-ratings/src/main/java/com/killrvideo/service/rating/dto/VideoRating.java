@@ -1,13 +1,12 @@
 package com.killrvideo.service.rating.dto;
 
-import java.io.Serializable;
-import java.util.UUID;
-
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
 import com.killrvideo.model.CommonConstants;
 import com.killrvideo.service.rating.dao.RatingDseDao;
+import java.io.Serializable;
+import java.util.UUID;
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
 
 /**
  * Pojo representing DTO for table 'video_ratings'.
@@ -28,6 +27,7 @@ public class VideoRating implements Serializable {
     public static final String COLUMN_RATING_TOTAL   = "rating_total";
     public static final String COLUMN_VIDEOID        = "videoid";
 
+    @Column
     @PartitionKey
     private UUID videoid;
 

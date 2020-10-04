@@ -1,18 +1,15 @@
 package com.killrvideo.dse.dto;
 
+import com.killrvideo.dse.utils.EmptyCollectionIfNull;
+import com.killrvideo.model.CommonConstants;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
-
 import javax.validation.constraints.NotNull;
-
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
 import org.hibernate.validator.constraints.Length;
-
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
-import com.killrvideo.dse.utils.EmptyCollectionIfNull;
-import com.killrvideo.model.CommonConstants;
 
 /**
  * Pojo representing DTO for table 'videos'.
@@ -34,7 +31,8 @@ public class Video extends AbstractVideo {
     public static final String COLUMN_LOCATION     = "location";
     public static final String COLUMN_LOCATIONTYPE = "location_type";
     public static final String COLUMN_ADDED_DATE   = "added_date";
-    
+
+    @Column
     @PartitionKey
     private UUID videoid;
 

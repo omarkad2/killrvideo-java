@@ -28,12 +28,6 @@
 			<groupId>com.datastax</groupId>
 			<artifactId>killrvideo-commons</artifactId>
 			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>ma.markware.charybdis</groupId>
-					<artifactId>charybdis-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
             <groupId>org.apache.commons</groupId>

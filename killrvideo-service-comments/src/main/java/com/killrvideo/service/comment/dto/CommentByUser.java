@@ -1,11 +1,10 @@
 package com.killrvideo.service.comment.dto;
 
-import java.util.UUID;
-
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
 import com.killrvideo.model.CommonConstants;
 import com.killrvideo.service.comment.dao.CommentDseDao;
+import java.util.UUID;
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.Table;
 
 /**
  * Specialization for USER.
@@ -44,6 +43,7 @@ public class CommentByUser extends Comment {
      * @return
      *       current value of 'userid'
      */
+    @Column
     @PartitionKey
     public UUID getUserid() {
         return userid;

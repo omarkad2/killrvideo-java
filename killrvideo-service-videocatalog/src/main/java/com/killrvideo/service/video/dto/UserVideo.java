@@ -1,19 +1,19 @@
 package com.killrvideo.service.video.dto;
 
-import java.util.Date;
-import java.util.UUID;
-
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
 import com.killrvideo.model.CommonConstants;
 import com.killrvideo.service.video.dao.VideoCatalogDseDao;
+import java.util.Date;
+import java.util.UUID;
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
 
 /**
  * Pojo representing DTO for table 'user_videos'
  *
  * @author DataStax Developer Advocates team.
  */
-@Table(keyspace = CommonConstants.KILLRVIDEO_KEYSPACE, 
+@Table(keyspace = CommonConstants.KILLRVIDEO_KEYSPACE,
        name = VideoCatalogDseDao.TABLENAME_USER_VIDEOS)
 public class UserVideo extends VideoPreview {
 
@@ -22,7 +22,8 @@ public class UserVideo extends VideoPreview {
     
     /** Column names in the DB. */
     public static final String COLUMN_USERID = "userid";
-    
+
+    @Column
     @PartitionKey
     private UUID userid;
 

@@ -1,24 +1,21 @@
 package com.killrvideo.service.user.dto;
 
-import java.util.Date;
-import java.util.UUID;
-
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
-
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
 import com.killrvideo.model.CommonConstants;
 import com.killrvideo.service.user.dao.UserDseDao;
+import java.util.Date;
+import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
+import ma.markware.charybdis.model.annotation.Table;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * Pojo representing DTO for table 'users'.
  *
  * @author DataStax Developer Advocates team.
  */
-@Table(keyspace = 
+@Table(keyspace =
             CommonConstants.KILLRVIDEO_KEYSPACE,
        name = UserDseDao.TABLENAME_USERS)
 public class User {
@@ -30,6 +27,7 @@ public class User {
     public static final String COLUMN_EMAIL     = "email";
     public static final String COLUMN_CREATE    = "created_date";
 
+    @Column
     @PartitionKey
     private UUID userid;
 

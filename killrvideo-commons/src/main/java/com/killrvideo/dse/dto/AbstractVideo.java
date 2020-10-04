@@ -1,8 +1,7 @@
 package com.killrvideo.dse.dto;
 
+import ma.markware.charybdis.model.annotation.Column;
 import org.hibernate.validator.constraints.Length;
-
-import com.datastax.driver.mapping.annotations.Column;
 
 /**
  * Bean representing shared attributes in videos.

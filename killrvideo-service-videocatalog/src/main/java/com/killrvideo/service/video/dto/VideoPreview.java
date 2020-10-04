@@ -1,11 +1,10 @@
 package com.killrvideo.service.video.dto;
 
+import com.killrvideo.dse.dto.AbstractVideo;
 import java.util.Date;
 import java.util.UUID;
-
-import com.datastax.driver.mapping.annotations.ClusteringColumn;
-import com.datastax.driver.mapping.annotations.Column;
-import com.killrvideo.dse.dto.AbstractVideo;
+import ma.markware.charybdis.model.annotation.ClusteringKey;
+import ma.markware.charybdis.model.annotation.Column;
 
 /**
  * Pojo representing multiple videso.
@@ -21,11 +20,12 @@ public class VideoPreview extends AbstractVideo {
     public static final String COLUMN_ADDEDDATE = "added_date";
     public static final String COLUMN_VIDEOID   = "videoid";
     
-    @ClusteringColumn
     @Column(name = COLUMN_ADDEDDATE)
+    @ClusteringKey
     private Date addedDate;
 
-    @ClusteringColumn(1)
+    @Column
+    @ClusteringKey(index = 1)
     private UUID videoid;
     
     /**
