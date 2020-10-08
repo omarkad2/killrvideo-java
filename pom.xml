@@ -398,15 +398,9 @@
             <release>${java.version}</release>
             <source>${java.version}</source>
             <target>${java.version}</target>
-            <generatedSourcesDirectory>src/generated/java/</generatedSourcesDirectory>
-            <annotationProcessors>
-              <annotationProcessor>
-                ma.markware.charybdis.apt.CharybdisProcessor
-              </annotationProcessor>
-              <annotationProcessor>
-                org.apache.tinkerpop.gremlin.process.traversal.dsl.GremlinDslProcessor
-              </annotationProcessor>
-            </annotationProcessors>
+            <compilerArgs>
+              <arg>-proc:none</arg>
+            </compilerArgs>
           </configuration>
           <dependencies>
             <dependency>
@@ -460,6 +454,61 @@
     </pluginManagement>
 
   </build>
+
+  <profiles>
+    <profile>
+      <id>generate</id>
+      <build>
+        <plugins>
+
+          <!-- Clean generated classes -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.6.0</version>
+            <executions>
+              <execution>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <executable>rm</executable>
+              <arguments>
+                <argument>-rf</argument>
+                <argument>src/generated/java/</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+
+          <!-- Generate Charybdis metadata -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${maven-compiler-plugin.version}</version>
+            <configuration combine.self="override">
+              <forceJavacCompilerUse>true</forceJavacCompilerUse>
+              <release>${java.version}</release>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
+              <generatedSourcesDirectory>src/generated/java/</generatedSourcesDirectory>
+              <annotationProcessors>
+                <annotationProcessor>
+                  ma.markware.charybdis.apt.CharybdisProcessor
+                </annotationProcessor>
+              <annotationProcessor>
+                  org.apache.tinkerpop.gremlin.process.traversal.dsl.GremlinDslProcessor
+              </annotationProcessor>
+              </annotationProcessors>
+            </configuration>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- ~ LICENSE (APACHE2) ~ -->
