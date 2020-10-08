@@ -4,6 +4,7 @@ import com.killrvideo.model.CommonConstants;
 import com.killrvideo.service.comment.dao.CommentDseDao;
 import java.util.UUID;
 import ma.markware.charybdis.model.annotation.Column;
+import ma.markware.charybdis.model.annotation.PartitionKey;
 import ma.markware.charybdis.model.annotation.Table;
 
 /**
