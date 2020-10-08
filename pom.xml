@@ -398,9 +398,15 @@
             <release>${java.version}</release>
             <source>${java.version}</source>
             <target>${java.version}</target>
-<!--            <compilerArgs>-->
-<!--              <arg>-proc:none</arg>-->
-<!--            </compilerArgs>-->
+            <generatedSourcesDirectory>src/generated/java/</generatedSourcesDirectory>
+            <annotationProcessors>
+              <annotationProcessor>
+                ma.markware.charybdis.apt.CharybdisProcessor
+              </annotationProcessor>
+              <annotationProcessor>
+                org.apache.tinkerpop.gremlin.process.traversal.dsl.GremlinDslProcessor
+              </annotationProcessor>
+            </annotationProcessors>
           </configuration>
           <dependencies>
             <dependency>
@@ -454,49 +460,6 @@
     </pluginManagement>
 
   </build>
-
-<!--  <profiles>-->
-<!--    <profile>-->
-<!--      <id>generate</id>-->
-<!--      <build>-->
-<!--        <plugins>-->
-<!--          <plugin>-->
-<!--            <groupId>org.codehaus.mojo</groupId>-->
-<!--            <artifactId>exec-maven-plugin</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--            <executions>-->
-<!--              <execution>-->
-<!--                <phase>generate-sources</phase>-->
-<!--                <goals>-->
-<!--                  <goal>exec</goal>-->
-<!--                </goals>-->
-<!--              </execution>-->
-<!--            </executions>-->
-<!--            <configuration>-->
-<!--              <executable>rm</executable>-->
-<!--              <arguments>-->
-<!--                <argument>-rf</argument>-->
-<!--                <argument>src/generated/java</argument>-->
-<!--              </arguments>-->
-<!--            </configuration>-->
-<!--          </plugin>-->
-<!--          <plugin>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-compiler-plugin</artifactId>-->
-<!--            <version>3.5.1</version>-->
-<!--            <configuration combine.self="override">-->
-<!--              <generatedSourcesDirectory>src/generated/java</generatedSourcesDirectory>-->
-<!--              <annotationProcessors>-->
-<!--                <annotationProcessor>-->
-<!--                  ma.markware.charybdis.apt.CharybdisProcessor-->
-<!--                </annotationProcessor>-->
-<!--              </annotationProcessors>-->
-<!--            </configuration>-->
-<!--          </plugin>-->
-<!--        </plugins>-->
-<!--      </build>-->
-<!--    </profile>-->
-<!--  </profiles>-->
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- ~ LICENSE (APACHE2) ~ -->
