@@ -60,7 +60,7 @@ public class StatisticsServiceGrpc extends StatisticsServiceImplBase {
         final UUID videoId = UUID.fromString(grpcReq.getVideoId().getValue());
         
         // Invoke DAO Async
-        CompletableFuture<Void> futureDao = statisticsDseDao.recordPlaybackStartedAsync(videoId);
+        CompletableFuture<Boolean> futureDao = statisticsDseDao.recordPlaybackStartedAsync(videoId);
         
         // Map Result back to GRPC
         futureDao.whenComplete((result, error) -> {

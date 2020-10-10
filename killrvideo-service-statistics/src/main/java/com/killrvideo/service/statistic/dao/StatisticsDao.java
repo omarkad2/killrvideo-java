@@ -1,16 +1,10 @@
 package com.killrvideo.service.statistic.dao;
 
-import com.datastax.driver.core.BoundStatement;
-import com.datastax.driver.core.ConsistencyLevel;
-import com.datastax.driver.core.PreparedStatement;
-import com.datastax.driver.core.RegularStatement;
-import com.datastax.driver.core.querybuilder.QueryBuilder;
-import com.datastax.driver.dse.DseSession;
-import com.datastax.driver.mapping.Mapper;
 import com.killrvideo.dse.dao.DaoSupport;
 import com.killrvideo.service.statistic.dto.VideoPlaybackStats;
-import com.killrvideo.utils.FutureUtils;
+import com.killrvideo.service.statistic.dto.VideoPlaybackStats_Table;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -23,48 +17,10 @@ import org.springframework.util.Assert;
  * @author DataStax Developer Advocates team.
  */
 @Repository
-public class StatisticsDao extends DaoSupport {
+public abstract class StatisticsDao extends DaoSupport {
 
     /** Table Names. */
     public static final String TABLENAME_PLAYBACK_STATS = "video_playback_stats";
-    
-    /** Mapper to ease queries. */
-    protected  Mapper< VideoPlaybackStats > mappervideoPlaybackStats;
-    
-    /** Precompile statements to speed up queries. */
-    private PreparedStatement incrRecordPlayBacks;
-    
-    /**
-     * Default constructor.
-     */
-    public StatisticsDao() {
-        super();
-    }
-    
-    /**
-     * Allow explicit intialization for test purpose.
-     */
-    public StatisticsDao(DseSession dseSession) {
-        super(dseSession);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected void initialize() {
-        
-        mappervideoPlaybackStats = mappingManager.mapper(VideoPlaybackStats.class);
-        
-        // use incr() call to increment my counter field 
-        // https://docs.datastax.com/en/developer/java-driver/3.2/faq/#how-do-i-increment-counters-with-query-builder
-        String keyspacePlayback  = mappervideoPlaybackStats.getTableMetadata().getKeyspace().getName();
-        String tableNamePlayback = mappervideoPlaybackStats.getTableMetadata().getName();
-        RegularStatement queryIncPaylBack = QueryBuilder
-                .update(keyspacePlayback, tableNamePlayback)
-                .with(QueryBuilder.incr(VideoPlaybackStats.COLUMN_VIEWS))
-                .where(QueryBuilder.eq(VideoPlaybackStats.COLUMN_VIDEOID, QueryBuilder.bindMarker()));
-        incrRecordPlayBacks = dseSession.prepare(queryIncPaylBack);
-        incrRecordPlayBacks.setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM);
-    }
     
     /**
      * Increment counter in DB (Async).
@@ -72,10 +28,13 @@ public class StatisticsDao extends DaoSupport {
      * @param videoId
      *      current videoid.
      */
-    public CompletableFuture<Void> recordPlaybackStartedAsync(UUID videoId) {
+    public CompletableFuture<Boolean> recordPlaybackStartedAsync(UUID videoId) {
         Assert.notNull(videoId, "videoid is required to update statistics");
-        BoundStatement bound = incrRecordPlayBacks.bind().setUUID(VideoPlaybackStats.COLUMN_VIDEOID, videoId);
-        return FutureUtils.asCompletableFuture(dseSession.executeAsync(bound)).<Void>thenApply(c -> null);
+        return cqlTemplate.dsl().withConsistency(ma.markware.charybdis.model.option.ConsistencyLevel.LOCAL_QUORUM)
+                          .update(VideoPlaybackStats_Table.video_playback_stats)
+                          .set(VideoPlaybackStats_Table.views, new Random().nextLong())
+                          .where(VideoPlaybackStats_Table.videoid.eq(videoId))
+                          .executeAsync();
     }
     
     /**
@@ -88,12 +47,21 @@ public class StatisticsDao extends DaoSupport {
      */
     public CompletableFuture<List<VideoPlaybackStats>> getNumberOfPlaysAsync(List<UUID> listOfVideoIds) {
         Assert.notNull(listOfVideoIds, "videoid list cannot be null");
-        
+
         // Create a future for each entry
         final List<CompletableFuture<VideoPlaybackStats>> futureList = listOfVideoIds.stream()
-                      .map(mappervideoPlaybackStats::getAsync)
-                      .map(FutureUtils::asCompletableFuture)
-                      .collect(Collectors.toList());
+                                                                       .map(videoId -> cqlTemplate.dsl()
+                                                                                                  .selectFrom(VideoPlaybackStats_Table.video_playback_stats)
+                                                                                                  .where(VideoPlaybackStats_Table.videoid.eq(videoId))
+                                                                                                  .fetchOneAsync()
+                                                                                                  .thenApply(
+                                                                                                      record -> {
+                                                                                                          VideoPlaybackStats videoPlaybackStats = new VideoPlaybackStats();
+                                                                                                          videoPlaybackStats.setVideoid(record.get(VideoPlaybackStats_Table.videoid));
+                                                                                                          videoPlaybackStats.setViews(record.get(VideoPlaybackStats_Table.views));
+                                                                                                          return videoPlaybackStats;
+                                                                                                      }))
+                                                                       .collect(Collectors.toList());
 
         // List <Future> => Future<List> ! Amazing
         return CompletableFuture.allOf(futureList.toArray(new CompletableFuture[futureList.size()]))
