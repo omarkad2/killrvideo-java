@@ -1,7 +1,7 @@
 package com.killrvideo.service.statistic.dto;
 
 import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.statistic.dao.StatisticsDseDao;
+import com.killrvideo.service.statistic.dao.StatisticsDao;
 import java.io.Serializable;
 import java.util.UUID;
 import ma.markware.charybdis.model.annotation.Column;
@@ -16,7 +16,7 @@ import ma.markware.charybdis.model.annotation.Table;
 @Table(keyspace =
         CommonConstants.KILLRVIDEO_KEYSPACE, 
        name = 
-        StatisticsDseDao.TABLENAME_PLAYBACK_STATS)
+        StatisticsDao.TABLENAME_PLAYBACK_STATS)
 public class VideoPlaybackStats implements Serializable {
 
     /** Serial. */

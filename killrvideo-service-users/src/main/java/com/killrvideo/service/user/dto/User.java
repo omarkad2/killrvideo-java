@@ -1,7 +1,7 @@
 package com.killrvideo.service.user.dto;
 
 import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.user.dao.UserDseDao;
+import com.killrvideo.service.user.dao.UserDao;
 import java.time.Instant;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.Length;
  */
 @Table(keyspace =
             CommonConstants.KILLRVIDEO_KEYSPACE,
-       name = UserDseDao.TABLENAME_USERS)
+       name = UserDao.TABLENAME_USERS)
 public class User {
 
     /** Column names in the DB. */

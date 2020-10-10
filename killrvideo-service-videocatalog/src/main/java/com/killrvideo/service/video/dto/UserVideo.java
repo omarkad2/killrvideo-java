@@ -1,7 +1,7 @@
 package com.killrvideo.service.video.dto;
 
 import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.video.dao.VideoCatalogDseDao;
+import com.killrvideo.service.video.dao.VideoCatalogDao;
 import java.time.Instant;
 import java.util.UUID;
 import ma.markware.charybdis.model.annotation.Column;
@@ -14,7 +14,7 @@ import ma.markware.charybdis.model.annotation.Table;
  * @author DataStax Developer Advocates team.
  */
 @Table(keyspace = CommonConstants.KILLRVIDEO_KEYSPACE,
-       name = VideoCatalogDseDao.TABLENAME_USER_VIDEOS)
+       name = VideoCatalogDao.TABLENAME_USER_VIDEOS)
 public class UserVideo extends VideoPreview {
 
     /** Serial. */

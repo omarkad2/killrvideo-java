@@ -6,22 +6,14 @@ import static com.killrvideo.service.rating.grpc.RatingsServiceGrpcValidator.val
 import static com.killrvideo.service.rating.grpc.RatingsServiceGrpcValidator.validateGrpcRequest_GetUserRating;
 import static com.killrvideo.service.rating.grpc.RatingsServiceGrpcValidator.validateGrpcRequest_RateVideo;
 
+import com.killrvideo.messaging.dao.MessagingDao;
+import com.killrvideo.service.rating.dao.RatingDao;
+import com.killrvideo.utils.GrpcMappingUtils;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import com.killrvideo.messaging.dao.MessagingDao;
-import com.killrvideo.service.rating.dao.RatingDseDao;
-import com.killrvideo.utils.GrpcMappingUtils;
-
-import io.grpc.Status;
-import io.grpc.stub.StreamObserver;
 import killrvideo.ratings.RatingsServiceGrpc.RatingsServiceImplBase;
 import killrvideo.ratings.RatingsServiceOuterClass.GetRatingRequest;
 import killrvideo.ratings.RatingsServiceOuterClass.GetRatingResponse;
@@ -30,6 +22,11 @@ import killrvideo.ratings.RatingsServiceOuterClass.GetUserRatingResponse;
 import killrvideo.ratings.RatingsServiceOuterClass.RateVideoRequest;
 import killrvideo.ratings.RatingsServiceOuterClass.RateVideoResponse;
 import killrvideo.ratings.events.RatingsEvents.UserRatedVideo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * Operations on Ratings with GRPC.
@@ -53,7 +50,7 @@ public class RatingsServiceGrpc extends RatingsServiceImplBase {
     private String topicvideoRated;
     
     @Autowired
-    private RatingDseDao dseRatingDao;
+    private RatingDao dseRatingDao;
     
     /** {@inheritDoc} */
     @Override

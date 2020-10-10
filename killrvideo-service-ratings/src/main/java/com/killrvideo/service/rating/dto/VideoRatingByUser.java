@@ -1,7 +1,7 @@
 package com.killrvideo.service.rating.dto;
 
 import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.rating.dao.RatingDseDao;
+import com.killrvideo.service.rating.dao.RatingDao;
 import java.io.Serializable;
 import java.util.UUID;
 import ma.markware.charybdis.model.annotation.ClusteringKey;
@@ -15,7 +15,7 @@ import ma.markware.charybdis.model.annotation.Table;
  * @author DataStax Developer Advocates team.
  */
 @Table(name=
-        RatingDseDao.TABLENAME_VIDEOS_RATINGS_BYUSER,
+        RatingDao.TABLENAME_VIDEOS_RATINGS_BYUSER,
        keyspace=
          CommonConstants.KILLRVIDEO_KEYSPACE)
 public class VideoRatingByUser implements Serializable {

@@ -14,7 +14,7 @@ import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.Result;
 import com.datastax.dse.graph.api.DseGraph;
 import com.google.common.collect.Sets;
-import com.killrvideo.dse.dao.DseDaoSupport;
+import com.killrvideo.dse.dao.DaoSupport;
 import com.killrvideo.dse.dto.ResultListPage;
 import com.killrvideo.dse.dto.Video;
 import com.killrvideo.dse.graph.KillrVideoTraversal;
@@ -46,10 +46,10 @@ import org.springframework.util.Assert;
  * @author DataStax Developer Advocates team.
  */
 @Repository
-public class SuggestedVideosDseDao extends DseDaoSupport implements KillrVideoTraversalConstants {
+public class SuggestedVideosDao extends DaoSupport implements KillrVideoTraversalConstants {
     
     /** Logger for DAO. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SuggestedVideosDseDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SuggestedVideosDao.class);
 
     /** Mapper to ease queries. */
     protected Mapper< Video > mapperVideo;
@@ -80,14 +80,14 @@ public class SuggestedVideosDseDao extends DseDaoSupport implements KillrVideoTr
     /**
      * Default constructor.
      */
-    public SuggestedVideosDseDao() {
+    public SuggestedVideosDao() {
         super();
     }
     
     /**
      * Allow explicit intialization for test purpose.
      */
-    public SuggestedVideosDseDao(DseSession dseSession) {
+    public SuggestedVideosDao(DseSession dseSession) {
         super(dseSession);
     }
 

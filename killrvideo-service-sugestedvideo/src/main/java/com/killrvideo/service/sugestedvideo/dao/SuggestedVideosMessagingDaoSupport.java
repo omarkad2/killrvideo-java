@@ -23,7 +23,7 @@ public abstract class SuggestedVideosMessagingDaoSupport {
     private static Logger LOGGER = LoggerFactory.getLogger(SuggestedVideosMessagingDaoSupport.class);
     
     @Autowired
-    protected SuggestedVideosDseDao sugestedVideoDseDao;
+    protected SuggestedVideosDao sugestedVideoDseDao;
     
     /**
      * Message is consumed from specialized class but treatment is the same, updating graph.

@@ -12,7 +12,7 @@ import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.Result;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import com.killrvideo.dse.dao.DseDaoSupport;
+import com.killrvideo.dse.dao.DaoSupport;
 import com.killrvideo.dse.dto.CustomPagingState;
 import com.killrvideo.dse.dto.ResultListPage;
 import com.killrvideo.dse.dto.Video;
@@ -48,7 +48,7 @@ import org.springframework.util.Assert;
  * @author DataStax Developer Advocates team.
  */
 @Repository
-public class VideoCatalogDseDao extends DseDaoSupport {
+public class VideoCatalogDao extends DaoSupport {
 
     /** Constants. */
     public static final int     MAX_DAYS_IN_PAST_FOR_LATEST_VIDEOS = 7;
@@ -64,7 +64,7 @@ public class VideoCatalogDseDao extends DseDaoSupport {
     public static final String TABLENAME_USER_VIDEOS   = "user_videos";
     
     /** Loger for that class. */
-    private static Logger LOGGER = LoggerFactory.getLogger(VideoCatalogDseDao.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(VideoCatalogDao.class);
     
     /** Mapper. */
     private Mapper< Video >       videoMapper;
@@ -109,14 +109,14 @@ public class VideoCatalogDseDao extends DseDaoSupport {
     /**
      * Default constructor.
      */
-    public VideoCatalogDseDao() {
+    public VideoCatalogDao() {
         super();
     }
     
     /**
      * Allow explicit intialization for test purpose.
      */
-    public VideoCatalogDseDao(DseSession dseSession) {
+    public VideoCatalogDao(DseSession dseSession) {
         super(dseSession);
     }
     
@@ -177,7 +177,7 @@ public class VideoCatalogDseDao extends DseDaoSupport {
                 .cassandraPagingState(null)
                 .listOfBuckets(LongStream.rangeClosed(0L, 7L).boxed()
                         .map(Instant.now().atZone(ZoneId.systemDefault())::minusDays)
-                        .map(x -> x.format(VideoCatalogDseDao.DATEFORMATTER))
+                        .map(x -> x.format(VideoCatalogDao.DATEFORMATTER))
                         .collect(Collectors.toList()));
     }
     

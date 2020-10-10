@@ -1,20 +1,5 @@
 package com.killrvideo.service.search.dao;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.concurrent.CompletableFuture;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.PostConstruct;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
-
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.ConsistencyLevel;
 import com.datastax.driver.core.PagingState;
@@ -26,10 +11,22 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.dse.DseSession;
 import com.datastax.driver.mapping.Mapper;
 import com.google.common.reflect.TypeToken;
-import com.killrvideo.dse.dao.DseDaoSupport;
+import com.killrvideo.dse.dao.DaoSupport;
 import com.killrvideo.dse.dto.ResultListPage;
 import com.killrvideo.dse.dto.Video;
 import com.killrvideo.utils.FutureUtils;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.concurrent.CompletableFuture;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 /**
  * Implementations of operation for Videos.
@@ -37,10 +34,10 @@ import com.killrvideo.utils.FutureUtils;
  * @author DataStax Developer Advocates team.
  */
 @Repository
-public class SearchDseDao extends DseDaoSupport {
+public class SearchDao extends DaoSupport {
 
 	/** Logger for that class. */
-    private static Logger LOGGER = LoggerFactory.getLogger(SearchDseDao.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(SearchDao.class);
    
     /** Mapper to ease queries. */
     protected Mapper < Video >  mapperVideo;
@@ -70,14 +67,14 @@ public class SearchDseDao extends DseDaoSupport {
     /**
      * Default constructor.
      */
-    public SearchDseDao() {
+    public SearchDao() {
         super();
     }
     
     /**
      * Allow explicit intialization for test purpose.
      */
-    public SearchDseDao(DseSession dseSession) {
+    public SearchDao(DseSession dseSession) {
         super(dseSession);
     }
     

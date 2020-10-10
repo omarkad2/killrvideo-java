@@ -1,7 +1,7 @@
 package com.killrvideo.service.comment.dao;
 
 
-import com.killrvideo.dse.dao.DseDaoSupport;
+import com.killrvideo.dse.dao.DaoSupport;
 import com.killrvideo.dse.dto.ResultListPage;
 import com.killrvideo.service.comment.dto.Comment;
 import com.killrvideo.service.comment.dto.CommentByUser;
@@ -33,7 +33,7 @@ import org.springframework.util.Assert;
  * @author DataStax Developer Advocates team.
  */
 @Repository
-public abstract class CommentDao extends DseDaoSupport {
+public abstract class CommentDao extends DaoSupport {
 
     private static Logger LOGGER = LoggerFactory.getLogger(CommentDao.class);
     

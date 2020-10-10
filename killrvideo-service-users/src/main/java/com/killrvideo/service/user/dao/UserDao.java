@@ -10,7 +10,7 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.dse.DseSession;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.Result;
-import com.killrvideo.dse.dao.DseDaoSupport;
+import com.killrvideo.dse.dao.DaoSupport;
 import com.killrvideo.service.user.dto.User;
 import com.killrvideo.service.user.dto.UserCredentials;
 import com.killrvideo.utils.FutureUtils;
@@ -30,10 +30,10 @@ import org.springframework.stereotype.Repository;
  * @author DataStax Developer Advocates Team
  */
 @Repository
-public class UserDseDao extends DseDaoSupport {
+public class UserDao extends DaoSupport {
 
     /** Logger for DAO. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserDseDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
     
     /** Data model constants. */
     public static final String TABLENAME_USERS                         = "users";
@@ -51,14 +51,14 @@ public class UserDseDao extends DseDaoSupport {
     /**
      * Default constructor.
      */
-    public UserDseDao() {
+    public UserDao() {
         super();
     }
     
     /**
      * Allow explicit intialization for test purpose.
      */
-    public UserDseDao(DseSession dseSession) {
+    public UserDao(DseSession dseSession) {
         super(dseSession);
     }
     

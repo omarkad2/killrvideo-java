@@ -4,32 +4,29 @@ import static com.killrvideo.service.sugestedvideo.grpc.SuggestedVideosServiceGr
 import static com.killrvideo.service.sugestedvideo.grpc.SuggestedVideosServiceGrpcMapper.validateGrpcRequest_getUserSuggestedVideo;
 import static com.killrvideo.utils.GrpcMappingUtils.uuidToUuid;
 
+import com.killrvideo.dse.dto.ResultListPage;
+import com.killrvideo.dse.dto.Video;
+import com.killrvideo.service.sugestedvideo.dao.SuggestedVideosDao;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import com.killrvideo.dse.dto.ResultListPage;
-import com.killrvideo.dse.dto.Video;
-import com.killrvideo.service.sugestedvideo.dao.SuggestedVideosDseDao;
-
-import io.grpc.Status;
-import io.grpc.stub.StreamObserver;
 import killrvideo.common.CommonTypes.Uuid;
 import killrvideo.suggested_videos.SuggestedVideoServiceGrpc.SuggestedVideoServiceImplBase;
 import killrvideo.suggested_videos.SuggestedVideosService.GetRelatedVideosRequest;
 import killrvideo.suggested_videos.SuggestedVideosService.GetRelatedVideosResponse;
 import killrvideo.suggested_videos.SuggestedVideosService.GetSuggestedForUserRequest;
 import killrvideo.suggested_videos.SuggestedVideosService.GetSuggestedForUserResponse;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * Suggested video for a user.
@@ -46,7 +43,7 @@ public class SuggestedVideosServiceGrpc extends SuggestedVideoServiceImplBase {
     private String serviceKey;
     
     @Autowired
-    private SuggestedVideosDseDao suggestedVideosDseDao;
+    private SuggestedVideosDao suggestedVideosDseDao;
     
     /** {@inheritDoc} */
     @Override

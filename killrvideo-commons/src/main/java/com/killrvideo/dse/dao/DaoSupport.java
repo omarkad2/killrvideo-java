@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author DataStax Developer Advocates team.
  */
-public abstract class DseDaoSupport implements CommonConstants {
+public abstract class DaoSupport implements CommonConstants {
 
     /** Loger for that class. */
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -47,12 +47,12 @@ public abstract class DseDaoSupport implements CommonConstants {
     /**
      * Default constructor.
      */
-    public DseDaoSupport() {}
+    public DaoSupport() {}
     
     /**
      * Allow explicit intialization for test purpose.
      */
-    public DseDaoSupport(DseSession dseSession) {
+    public DaoSupport(DseSession dseSession) {
         this.dseSession     = dseSession;
         this.mappingManager = new MappingManager(dseSession);
         initialize();

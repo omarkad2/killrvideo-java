@@ -3,30 +3,27 @@ package com.killrvideo.service.search.grpc;
 import static com.killrvideo.service.search.grpc.SearchServiceGrpcValidator.validateGrpcRequest_GetQuerySuggestions;
 import static com.killrvideo.service.search.grpc.SearchServiceGrpcValidator.validateGrpcRequest_SearchVideos;
 
+import com.killrvideo.dse.dto.ResultListPage;
+import com.killrvideo.dse.dto.Video;
+import com.killrvideo.service.search.dao.SearchDao;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
-
+import killrvideo.search.SearchServiceGrpc.SearchServiceImplBase;
+import killrvideo.search.SearchServiceOuterClass.GetQuerySuggestionsRequest;
+import killrvideo.search.SearchServiceOuterClass.GetQuerySuggestionsResponse;
+import killrvideo.search.SearchServiceOuterClass.SearchVideosRequest;
+import killrvideo.search.SearchServiceOuterClass.SearchVideosResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.killrvideo.dse.dto.ResultListPage;
-import com.killrvideo.dse.dto.Video;
-import com.killrvideo.service.search.dao.SearchDseDao;
-
-import io.grpc.Status;
-import io.grpc.stub.StreamObserver;
-import killrvideo.search.SearchServiceGrpc.SearchServiceImplBase;
-import killrvideo.search.SearchServiceOuterClass.GetQuerySuggestionsRequest;
-import killrvideo.search.SearchServiceOuterClass.GetQuerySuggestionsResponse;
-import killrvideo.search.SearchServiceOuterClass.SearchVideosRequest;
-import killrvideo.search.SearchServiceOuterClass.SearchVideosResponse;
 
 /**
  * Service SEARCG.
@@ -43,7 +40,7 @@ public class SearchServiceGrpc extends SearchServiceImplBase {
     private String serviceKey;
    
     @Autowired
-    private SearchDseDao dseSearchDao;
+    private SearchDao dseSearchDao;
     
     /** {@inheritDoc} */
     @Override
