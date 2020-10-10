@@ -1,11 +1,8 @@
 package com.killrvideo.utils;
 
-import java.time.Instant;
-import java.util.Date;
-import java.util.UUID;
-
 import com.google.protobuf.Timestamp;
-
+import java.time.Instant;
+import java.util.UUID;
 import killrvideo.common.CommonTypes.TimeUuid;
 import killrvideo.common.CommonTypes.Uuid;
 
@@ -35,14 +32,6 @@ public class GrpcMappingUtils {
        return Instant.ofEpochSecond(
                protoTimeStamp.getSeconds(), 
                protoTimeStamp.getNanos() ) ;
-    }
-    
-    public static Date timestampToDate(Timestamp protoTimestamp) {
-        return Date.from(timestampToInstant(protoTimestamp));
-    }
-    
-    public static Timestamp dateToTimestamp(Date date) {
-        return instantToTimeStamp(date.toInstant());
     }
     
     public static Timestamp instantToTimeStamp(Instant instant) {

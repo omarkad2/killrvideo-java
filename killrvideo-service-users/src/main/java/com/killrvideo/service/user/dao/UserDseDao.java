@@ -1,17 +1,5 @@
 package com.killrvideo.service.user.dao;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-
-import javax.annotation.PostConstruct;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.ConsistencyLevel;
 import com.datastax.driver.core.PreparedStatement;
@@ -26,6 +14,15 @@ import com.killrvideo.dse.dao.DseDaoSupport;
 import com.killrvideo.service.user.dto.User;
 import com.killrvideo.service.user.dto.UserCredentials;
 import com.killrvideo.utils.FutureUtils;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 /**
  * Handling user.

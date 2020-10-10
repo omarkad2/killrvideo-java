@@ -2,7 +2,7 @@ package com.killrvideo.service.video.dto;
 
 import com.killrvideo.model.CommonConstants;
 import com.killrvideo.service.video.dao.VideoCatalogDseDao;
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 import ma.markware.charybdis.model.annotation.Column;
 import ma.markware.charybdis.model.annotation.PartitionKey;
@@ -39,7 +39,7 @@ public class LatestVideo extends VideoPreview {
     /**
      * Constructor with all parameters.
      */
-    public LatestVideo(String yyyymmdd, UUID userid, UUID videoid, String name, String previewImageLocation, Date addedDate) {
+    public LatestVideo(String yyyymmdd, UUID userid, UUID videoid, String name, String previewImageLocation, Instant addedDate) {
         super(name, previewImageLocation, addedDate, videoid);
         this.yyyymmdd = yyyymmdd;
         this.userid = userid;

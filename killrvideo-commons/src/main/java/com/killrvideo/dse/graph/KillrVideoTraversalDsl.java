@@ -10,10 +10,9 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.within;
 import static org.apache.tinkerpop.gremlin.structure.Column.keys;
 import static org.apache.tinkerpop.gremlin.structure.Column.values;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
-
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.Scope;
 import org.apache.tinkerpop.gremlin.process.traversal.Traversal;
@@ -179,7 +178,7 @@ public interface KillrVideoTraversalDsl<S, E> extends GraphTraversal.Admin<S, E>
      * @return
      */
     @SuppressWarnings("unchecked")
-	public default GraphTraversal<S, Vertex> tag(String name, Date tagged_date) {
+	public default GraphTraversal<S, Vertex> tag(String name, Instant tagged_date) {
         Assert.notNull(tagged_date, "The tagged_date must not be null");
         Assert.hasLength(name, "The name of the tag must not be null or empty");
         return coalesce(
@@ -198,7 +197,7 @@ public interface KillrVideoTraversalDsl<S, E> extends GraphTraversal.Admin<S, E>
      * @return
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	public default GraphTraversal<S, Vertex> taggedWith(String name, Date tagged_date) {
+	public default GraphTraversal<S, Vertex> taggedWith(String name, Instant tagged_date) {
         /**
          * no validation here as it would just duplicate what is happening in tag(). note the use of the
          * cast to KillrVideoTraversal. in this case, we want to use a DSL step within the DSL itself, but we want to

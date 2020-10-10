@@ -5,7 +5,6 @@ import java.lang.Class;
 import java.lang.Object;
 import java.lang.String;
 import java.time.Instant;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -79,22 +78,22 @@ public class UserVideo_Table implements TableMetadata<UserVideo> {
     }
   };
 
-  public static final ClusteringKeyColumnMetadata<Date, Date> addedDate = new ClusteringKeyColumnMetadata<Date, Date>() {
+  public static final ClusteringKeyColumnMetadata<Instant, Instant> addedDate = new ClusteringKeyColumnMetadata<Instant, Instant>() {
     public String getName() {
       return "added_date";
     }
 
     public Class getFieldClass() {
-      return java.util.Date.class;
+      return java.time.Instant.class;
     }
 
-    public Date serialize(Date field) {
+    public Instant serialize(Instant field) {
       return field;
     }
 
-    public Date deserialize(Row row) {
+    public Instant deserialize(Row row) {
       if (row == null || row.isNull("added_date")) return null;
-      return row.get("added_date", java.util.Date.class);
+      return row.get("added_date", java.time.Instant.class);
     }
 
     public int getClusteringKeyIndex() {

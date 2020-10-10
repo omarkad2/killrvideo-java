@@ -1,29 +1,5 @@
 package com.killrvideo.dse.conf;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
-import java.security.KeyStore;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.net.ssl.TrustManagerFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.ConsistencyLevel;
 import com.datastax.driver.core.QueryOptions;
@@ -48,9 +24,30 @@ import com.killrvideo.discovery.ServiceDiscoveryDao;
 import com.killrvideo.dse.graph.KillrVideoTraversalSource;
 import com.killrvideo.dse.utils.BlobToStringCodec;
 import com.killrvideo.model.CommonConstants;
-
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
+import java.security.KeyStore;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicInteger;
+import javax.net.ssl.TrustManagerFactory;
+import ma.markware.charybdis.CqlTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Connectivity to DSE (cassandra, graph, search, analytics).
@@ -204,7 +201,12 @@ public class DseConfiguration {
     public KillrVideoTraversalSource initializeGraphTraversalSource(DseSession session) {
         return DseGraph.traversal(session, KillrVideoTraversalSource.class);
     }
-    
+
+    @Bean
+    public CqlTemplate cqlTemplate() {
+      return new CqlTemplate();
+    }
+
     /**
      * Retrieve cluster nodes adresses (eg:node1:9042) from ETCD and initialize the `contact points`,
      * endpoints of Cassandra cluster nodes.

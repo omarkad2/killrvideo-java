@@ -1,7 +1,7 @@
 package com.killrvideo.service.video.dto;
 
 import com.killrvideo.dse.dto.AbstractVideo;
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 import ma.markware.charybdis.model.annotation.ClusteringKey;
 import ma.markware.charybdis.model.annotation.Column;
@@ -22,7 +22,7 @@ public class VideoPreview extends AbstractVideo {
     
     @Column(name = COLUMN_ADDEDDATE)
     @ClusteringKey
-    private Date addedDate;
+    private Instant addedDate;
 
     @Column
     @ClusteringKey(index = 1)
@@ -36,7 +36,7 @@ public class VideoPreview extends AbstractVideo {
     /**
      * Constructor used by sub entities.
      */
-    protected VideoPreview(String name, String preview, Date addedDate, UUID videoid) {
+    protected VideoPreview(String name, String preview, Instant addedDate, UUID videoid) {
         super(name, preview);
         this.addedDate = addedDate;
         this.videoid   = videoid;
@@ -48,7 +48,7 @@ public class VideoPreview extends AbstractVideo {
      * @return
      *       current value of 'addedDate'
      */
-    public Date getAddedDate() {
+    public Instant getAddedDate() {
         return addedDate;
     }
 
@@ -57,7 +57,7 @@ public class VideoPreview extends AbstractVideo {
      * @param addedDate
      *      new value for 'addedDate '
      */
-    public void setAddedDate(Date addedDate) {
+    public void setAddedDate(Instant addedDate) {
         this.addedDate = addedDate;
     }
 

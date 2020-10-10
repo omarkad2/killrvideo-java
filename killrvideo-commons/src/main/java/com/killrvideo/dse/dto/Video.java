@@ -2,7 +2,7 @@ package com.killrvideo.dse.dto;
 
 import com.killrvideo.dse.utils.EmptyCollectionIfNull;
 import com.killrvideo.model.CommonConstants;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -57,7 +57,7 @@ public class Video extends AbstractVideo {
 
     @NotNull
     @Column(name = COLUMN_ADDED_DATE)
-    private Date addedDate;
+    private Instant addedDate;
 
     /**
      * Default Constructor allowing reflection.
@@ -74,14 +74,14 @@ public class Video extends AbstractVideo {
     /**
      * Constructor wihout location nor preview.
      */
-    public Video(UUID videoid, UUID userid, String name, String description, int locationType, Set<String> tags, Date addedDate) {
+    public Video(UUID videoid, UUID userid, String name, String description, int locationType, Set<String> tags, Instant addedDate) {
         this(videoid, userid, name, description, null, locationType, null, tags, addedDate);
     }
 
     /**
      * All attributes constructor.
      */
-    public Video(UUID videoid, UUID userid, String name, String description, String location, int locationType, String previewImageLocation, Set<String> tags, Date addedDate) {
+    public Video(UUID videoid, UUID userid, String name, String description, String location, int locationType, String previewImageLocation, Set<String> tags, Instant addedDate) {
         super(name, previewImageLocation);
         this.videoid = videoid;
         this.userid = userid;
@@ -212,7 +212,7 @@ public class Video extends AbstractVideo {
      * @return
      *       current value of 'addedDate'
      */
-    public Date getAddedDate() {
+    public Instant getAddedDate() {
         return addedDate;
     }
 
@@ -221,7 +221,7 @@ public class Video extends AbstractVideo {
      * @param addedDate
      * 		new value for 'addedDate '
      */
-    public void setAddedDate(Date addedDate) {
+    public void setAddedDate(Instant addedDate) {
         this.addedDate = addedDate;
     }
     

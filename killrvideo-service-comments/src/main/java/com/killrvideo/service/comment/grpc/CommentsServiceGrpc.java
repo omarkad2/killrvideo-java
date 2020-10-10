@@ -9,25 +9,17 @@ import static com.killrvideo.service.comment.grpc.CommentsServiceGrpcValidator.v
 import static com.killrvideo.service.comment.grpc.CommentsServiceGrpcValidator.validateGrpcRequestGetVideoComment;
 import static java.util.UUID.fromString;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.concurrent.CompletableFuture;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import com.killrvideo.messaging.dao.MessagingDao;
-import com.killrvideo.service.comment.dao.CommentDseDao;
+import com.killrvideo.service.comment.dao.CommentDao;
 import com.killrvideo.service.comment.dto.Comment;
 import com.killrvideo.service.comment.dto.QueryCommentByUser;
 import com.killrvideo.service.comment.dto.QueryCommentByVideo;
 import com.killrvideo.utils.GrpcMappingUtils;
-
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.CompletableFuture;
 import killrvideo.comments.CommentsServiceGrpc.CommentsServiceImplBase;
 import killrvideo.comments.CommentsServiceOuterClass.CommentOnVideoRequest;
 import killrvideo.comments.CommentsServiceOuterClass.CommentOnVideoResponse;
@@ -36,6 +28,11 @@ import killrvideo.comments.CommentsServiceOuterClass.GetUserCommentsResponse;
 import killrvideo.comments.CommentsServiceOuterClass.GetVideoCommentsRequest;
 import killrvideo.comments.CommentsServiceOuterClass.GetVideoCommentsResponse;
 import killrvideo.comments.events.CommentsEvents.UserCommentedOnVideo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * Exposition of comment services with GPRC Technology & Protobuf Interface
@@ -50,7 +47,7 @@ public class CommentsServiceGrpc extends CommentsServiceImplBase {
     
     /** Communications and queries to DSE (Comment). */
     @Autowired
-    private CommentDseDao dseCommentDao;
+    private CommentDao dseCommentDao;
     
     @Autowired
     private MessagingDao messagingDao;

@@ -2,7 +2,6 @@ package com.killrvideo.service.search.grpc;
 
 import com.killrvideo.dse.dto.Video;
 import com.killrvideo.utils.GrpcMappingUtils;
-
 import killrvideo.search.SearchServiceOuterClass.SearchResultsVideoPreview;
 import killrvideo.search.SearchServiceOuterClass.SearchResultsVideoPreview.Builder;
 
@@ -31,7 +30,7 @@ public class SearchServiceGrpcMapper {
             builder.setPreviewImageLocation(v.getPreviewImageLocation());
         }
         if (v.getAddedDate() != null)  {
-            builder.setAddedDate(GrpcMappingUtils.dateToTimestamp(v.getAddedDate()));
+            builder.setAddedDate(GrpcMappingUtils.instantToTimeStamp(v.getAddedDate()));
         }
         return builder.build();
     }

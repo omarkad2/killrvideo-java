@@ -2,18 +2,15 @@ package com.killrvideo.service.sugestedvideo.dao;
 
 import static com.killrvideo.service.sugestedvideo.grpc.SuggestedVideosServiceGrpcMapper.mapVideoAddedtoVideoDTO;
 
-import java.util.Date;
-import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.killrvideo.utils.GrpcMappingUtils;
-
+import java.time.Instant;
+import java.util.UUID;
 import killrvideo.ratings.events.RatingsEvents.UserRatedVideo;
 import killrvideo.user_management.events.UserManagementEvents.UserCreated;
 import killrvideo.video_catalog.events.VideoCatalogEvents.YouTubeVideoAdded;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Message processing for suggestion services.
@@ -52,7 +49,7 @@ public abstract class SuggestedVideosMessagingDaoSupport {
      */
     protected void onUserCreatingMessage(UserCreated userCreationMessage) {
         final UUID userId       = UUID.fromString(userCreationMessage.getUserId().getValue());
-        final Date userCreation = GrpcMappingUtils.timestampToDate(userCreationMessage.getTimestamp());
+        final Instant userCreation = GrpcMappingUtils.timestampToInstant(userCreationMessage.getTimestamp());
         final String email      = userCreationMessage.getEmail();
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("[NewUserEvent] Processing for user {} ", userId);

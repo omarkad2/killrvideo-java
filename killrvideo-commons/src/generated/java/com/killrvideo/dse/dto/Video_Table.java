@@ -6,7 +6,6 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.time.Instant;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -137,22 +136,22 @@ public class Video_Table implements TableMetadata<Video> {
     }
   };
 
-  public static final ColumnMetadata<Date, Date> addedDate = new ColumnMetadata<Date, Date>() {
+  public static final ColumnMetadata<Instant, Instant> addedDate = new ColumnMetadata<Instant, Instant>() {
     public String getName() {
       return "added_date";
     }
 
     public Class getFieldClass() {
-      return java.util.Date.class;
+      return java.time.Instant.class;
     }
 
-    public Date serialize(Date field) {
+    public Instant serialize(Instant field) {
       return field;
     }
 
-    public Date deserialize(Row row) {
+    public Instant deserialize(Row row) {
       if (row == null || row.isNull("added_date")) return null;
-      return row.get("added_date", java.util.Date.class);
+      return row.get("added_date", java.time.Instant.class);
     }
   };
 

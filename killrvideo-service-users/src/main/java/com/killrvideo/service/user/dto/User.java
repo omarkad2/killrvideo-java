@@ -2,7 +2,7 @@ package com.killrvideo.service.user.dto;
 
 import com.killrvideo.model.CommonConstants;
 import com.killrvideo.service.user.dao.UserDseDao;
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import ma.markware.charybdis.model.annotation.Column;
@@ -45,7 +45,7 @@ public class User {
 
     @NotNull
     @Column(name = COLUMN_CREATE)
-    private Date createdAt;
+    private Instant createdAt;
 
     /**
      * Default constructor (reflection)
@@ -55,7 +55,7 @@ public class User {
     /**
      * Constructor with all parameters.
      */
-    public User(UUID userid, String firstname, String lastname, String email, Date createdAt) {
+    public User(UUID userid, String firstname, String lastname, String email, Instant createdAt) {
         this.userid = userid;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -145,7 +145,7 @@ public class User {
      * @return
      *       current value of 'createdAt'
      */
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
@@ -154,7 +154,7 @@ public class User {
      * @param createdAt
      * 		new value for 'createdAt '
      */
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
     

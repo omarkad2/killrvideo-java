@@ -1,24 +1,5 @@
 package com.killrvideo.service.sugestedvideo.dao;
 
-import java.time.Instant;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
-
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.PagingState;
 import com.datastax.driver.core.PreparedStatement;
@@ -42,6 +23,22 @@ import com.killrvideo.dse.graph.KillrVideoTraversalSource;
 import com.killrvideo.dse.graph.__;
 import com.killrvideo.dse.utils.DseUtils;
 import com.killrvideo.utils.FutureUtils;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 /**
  * Implementations of operation for Videos.
@@ -217,12 +214,12 @@ public class SuggestedVideosDseDao extends DseDaoSupport implements KillrVideoTr
     public void updateGraphNewVideo(Video video) {
         final KillrVideoTraversal traversal =
           // Add video Node
-          traversalSource.video(video.getVideoid(), video.getName(), new Date(), video.getDescription(), video.getPreviewImageLocation())
+          traversalSource.video(video.getVideoid(), video.getName(), Instant.now(), video.getDescription(), video.getPreviewImageLocation())
           // Add Uploaded Edge
           .add(__.uploaded(video.getUserid()));
           // Add Tags Nodes and edges
           Sets.newHashSet(video.getTags()).forEach(tag -> {
-            traversal.add(__.taggedWith(tag,  new Date()));
+            traversal.add(__.taggedWith(tag,  Instant.now()));
           });
 
         /**
@@ -251,7 +248,7 @@ public class SuggestedVideosDseDao extends DseDaoSupport implements KillrVideoTr
      *      current user
      */
     @SuppressWarnings({"rawtypes","unchecked"})
-    public void updateGraphNewUser(UUID userId, String email, Date userCreation) {
+    public void updateGraphNewUser(UUID userId, String email, Instant userCreation) {
         final KillrVideoTraversal traversal = traversalSource.user(userId, email, userCreation);
         GraphStatement gStatement = DseGraph.statementFromTraversal(traversal);
         LOGGER.info("Executed transversal for 'updateGraphNewUser' : {}", DseUtils.displayGraphTranserval(traversal));
@@ -292,7 +289,7 @@ public class SuggestedVideosDseDao extends DseDaoSupport implements KillrVideoTr
         Vertex v = node.get(VERTEX_VIDEO).asVertex();
         Vertex u = node.get(VERTEX_USER).asVertex();
         Video video = new Video();
-        video.setAddedDate(Date.from(v.getProperty("added_date").getValue().as(Instant.class)));
+//        video.setAddedDate(Date.from(v.getProperty("added_date").getValue().as(Instant.class)));
         video.setName(v.getProperty("name").getValue().asString());
         video.setPreviewImageLocation(v.getProperty("preview_image_location").getValue().asString());
         video.setVideoid(v.getId().get("videoId").as(UUID.class));

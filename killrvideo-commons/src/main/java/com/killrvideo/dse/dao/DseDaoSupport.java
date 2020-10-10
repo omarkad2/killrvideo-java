@@ -2,16 +2,15 @@ package com.killrvideo.dse.dao;
 
 import static com.datastax.driver.mapping.Mapper.Option.timestamp;
 
-import javax.annotation.PostConstruct;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.datastax.driver.dse.DseSession;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import com.killrvideo.model.CommonConstants;
+import javax.annotation.PostConstruct;
+import ma.markware.charybdis.CqlTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Mutualization of code for DAO.
@@ -33,7 +32,10 @@ public abstract class DseDaoSupport implements CommonConstants {
     /** Hold Driver Mapper to implement ORM with Cassandra. */
     @Autowired
     protected MappingManager mappingManager;
-    
+
+    @Autowired
+    protected CqlTemplate cqlTemplate;
+
     /**
      * Preparation of statements before firing queries allow signifiant performance improvements.
      * This can only be done it the statement is 'static', mean the number of parameter

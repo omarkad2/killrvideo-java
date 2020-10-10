@@ -1,5 +1,7 @@
 package com.killrvideo.dse.graph;
 
+import java.time.Instant;
+import java.util.UUID;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.TraversalStrategies;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
@@ -8,9 +10,6 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.springframework.util.Assert;
-
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * Traversal Source for our KillrVideo graph DSL (Domain Specific Language)
@@ -81,7 +80,7 @@ public class KillrVideoTraversalSourceDsl extends GraphTraversalSource implement
      * video vertex properties.
      */
     @SuppressWarnings("unchecked")
-	public GraphTraversal<Vertex, Vertex> video(UUID videoId, String name, Date added_date, String description, String previewImageLocation) {
+	public GraphTraversal<Vertex, Vertex> video(UUID videoId, String name, Instant added_date, String description, String previewImageLocation) {
         Assert.notNull(videoId, "The videoId must not be null");
         Assert.notNull(added_date, "The added_date must not be null");
         Assert.hasLength(name, "The name must not be null or empty");
@@ -109,7 +108,7 @@ public class KillrVideoTraversalSourceDsl extends GraphTraversalSource implement
      */
     //:TODO Possibly update added_date to use epoch long per Seb's comment
     @SuppressWarnings("unchecked")
-    public GraphTraversal<Vertex, Vertex> user(UUID userId, String email, Date added_date) {
+    public GraphTraversal<Vertex, Vertex> user(UUID userId, String email, Instant added_date) {
         Assert.notNull(userId, "The userId must not be null");
         Assert.notNull(added_date, "The added_date must not be null");
         Assert.hasLength(email, "The email must not be null or empty");
@@ -132,7 +131,7 @@ public class KillrVideoTraversalSourceDsl extends GraphTraversalSource implement
      * tag vertex properties.
      */
     @SuppressWarnings("unchecked")
-    public GraphTraversal<Vertex, Vertex> tag(String name, Date tagged_date) {
+    public GraphTraversal<Vertex, Vertex> tag(String name, Instant tagged_date) {
         Assert.notNull(tagged_date, "The tagged_date must not be null");
         Assert.hasLength(name, "The name must not be null or empty");
         return this.clone().V()

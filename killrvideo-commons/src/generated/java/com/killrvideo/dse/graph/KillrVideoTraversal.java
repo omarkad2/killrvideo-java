@@ -8,9 +8,9 @@ import java.lang.Number;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -80,12 +80,12 @@ public interface KillrVideoTraversal<S, E> extends KillrVideoTraversalDsl<S, E> 
   }
 
   @Override
-  default KillrVideoTraversal<S, Vertex> tag(String name, Date tagged_date) {
+  default KillrVideoTraversal<S, Vertex> tag(String name, Instant tagged_date) {
     return (KillrVideoTraversal) KillrVideoTraversalDsl.super.tag(name,tagged_date);
   }
 
   @Override
-  default KillrVideoTraversal<S, Vertex> taggedWith(String name, Date tagged_date) {
+  default KillrVideoTraversal<S, Vertex> taggedWith(String name, Instant tagged_date) {
     return (KillrVideoTraversal) KillrVideoTraversalDsl.super.taggedWith(name,tagged_date);
   }
 

@@ -5,7 +5,7 @@ import java.lang.Exception;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.BinaryOperator;
@@ -193,20 +193,20 @@ public class KillrVideoTraversalSource extends KillrVideoTraversalSourceDsl {
   }
 
   @Override
-  public KillrVideoTraversal<Vertex, Vertex> video(UUID videoId, String name, Date added_date,
+  public KillrVideoTraversal<Vertex, Vertex> video(UUID videoId, String name, Instant added_date,
       String description, String previewImageLocation) {
     KillrVideoTraversalSource clone = this.clone();
     return new DefaultKillrVideoTraversal (clone, super.video(videoId,name,added_date,description,previewImageLocation).asAdmin());
   }
 
   @Override
-  public KillrVideoTraversal<Vertex, Vertex> user(UUID userId, String email, Date added_date) {
+  public KillrVideoTraversal<Vertex, Vertex> user(UUID userId, String email, Instant added_date) {
     KillrVideoTraversalSource clone = this.clone();
     return new DefaultKillrVideoTraversal (clone, super.user(userId,email,added_date).asAdmin());
   }
 
   @Override
-  public KillrVideoTraversal<Vertex, Vertex> tag(String name, Date tagged_date) {
+  public KillrVideoTraversal<Vertex, Vertex> tag(String name, Instant tagged_date) {
     KillrVideoTraversalSource clone = this.clone();
     return new DefaultKillrVideoTraversal (clone, super.tag(name,tagged_date).asAdmin());
   }

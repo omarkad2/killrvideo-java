@@ -1,7 +1,7 @@
 package com.killrvideo.service.comment.dto;
 
 import com.killrvideo.dse.dto.AbstractEntity;
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import ma.markware.charybdis.model.annotation.ClusteringKey;
@@ -44,7 +44,7 @@ public class Comment extends AbstractEntity {
 
     @NotNull
     @CreationDate
-    private Date dateOfComment;
+    private Instant dateOfComment;
     
     /**
      * Default constructor.
@@ -121,7 +121,7 @@ public class Comment extends AbstractEntity {
      * @return
      *       current value of 'dateOfComment'
      */
-    public Date getDateOfComment() {
+    public Instant getDateOfComment() {
         return dateOfComment;
     }
 
@@ -130,7 +130,7 @@ public class Comment extends AbstractEntity {
      * @param dateOfComment
      * 		new value for 'dateOfComment '
      */
-    public void setDateOfComment(Date dateOfComment) {
+    public void setDateOfComment(Instant dateOfComment) {
         this.dateOfComment = dateOfComment;
     }
     

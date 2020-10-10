@@ -6,8 +6,8 @@ import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
 import java.lang.String;
+import java.time.Instant;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -73,11 +73,11 @@ public final class __ {
     return __.<S>start().taggers();
   }
 
-  public static <S> KillrVideoTraversal<S, Vertex> tag(String name, Date tagged_date) {
+  public static <S> KillrVideoTraversal<S, Vertex> tag(String name, Instant tagged_date) {
     return __.<S>start().tag(name,tagged_date);
   }
 
-  public static <S> KillrVideoTraversal<S, Vertex> taggedWith(String name, Date tagged_date) {
+  public static <S> KillrVideoTraversal<S, Vertex> taggedWith(String name, Instant tagged_date) {
     return __.<S>start().taggedWith(name,tagged_date);
   }
 

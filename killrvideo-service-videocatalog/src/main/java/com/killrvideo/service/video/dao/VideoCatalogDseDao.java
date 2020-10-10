@@ -1,29 +1,5 @@
 package com.killrvideo.service.video.dao;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.StringJoiner;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
-
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
-
 import com.datastax.driver.core.BatchStatement;
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.ConsistencyLevel;
@@ -44,6 +20,27 @@ import com.killrvideo.service.video.dto.LatestVideo;
 import com.killrvideo.service.video.dto.LatestVideosPage;
 import com.killrvideo.service.video.dto.UserVideo;
 import com.killrvideo.utils.FutureUtils;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.StringJoiner;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
+import javax.annotation.PostConstruct;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 /**
  * Implementations of operation for Videos.
@@ -386,16 +383,9 @@ public class VideoCatalogDseDao extends DseDaoSupport {
     
     /**
      * Create statment to populate 3 tables in the same time.
-     *
-     * @param v
-     *      current video to create
-     * @param location
-     *      location 0=YouTube
-     * @return
-     *      statement
      */
     private BatchStatement createStatementInsertVideo(Video v) {
-        final Date   now      = new Date();
+        final Instant   now      = Instant.now();
         final String yyyyMMdd = SDF.format(now);
         final BoundStatement insertVideo = submitYouTubeVideo_insertVideo.bind()
                 .setUUID("videoid", v.getVideoid())
@@ -405,27 +395,27 @@ public class VideoCatalogDseDao extends DseDaoSupport {
                 .setString("location", v.getLocation())
                 .setInt("location_type", v.getLocationType())
                 .setString("preview_image_location", v.getPreviewImageLocation())
-                .setSet("tags", v.getTags())
-                .setTimestamp("added_date", now);
+                .setSet("tags", v.getTags());
+//                .setTimestamp("added_date", now);
         final BoundStatement insertUserVideo = submitYouTubeVideo_insertUserVideo.bind()
                 .setUUID("userid", v.getUserid())
                 .setUUID("videoid", v.getVideoid())
                 .setString("name", v.getName())
-                .setString("preview_image_location",  v.getPreviewImageLocation())
-                .setTimestamp("added_date", now);
+                .setString("preview_image_location",  v.getPreviewImageLocation());
+//                .setTimestamp("added_date", now);
         final BoundStatement insertLatestVideo = submitYouTubeVideo_insertLatestVideo.bind()
                 .setString("yyyymmdd", yyyyMMdd)
                 .setUUID("userid", v.getUserid())
                 .setUUID("videoid", v.getVideoid())
                 .setString("name", v.getName())
-                .setString("preview_image_location", v.getPreviewImageLocation())
-                .setTimestamp("added_date", now);
+                .setString("preview_image_location", v.getPreviewImageLocation());
+//                .setTimestamp("added_date", now);
         /** Logged batch insert for automatic retry. */
         final BatchStatement batchStatement = new BatchStatement(BatchStatement.Type.LOGGED);
         batchStatement.add(insertVideo);
         batchStatement.add(insertUserVideo);
         batchStatement.add(insertLatestVideo);
-        batchStatement.setDefaultTimestamp(now.getTime());
+//        batchStatement.setDefaultTimestamp(now.getTime());
         return batchStatement;
     }
     

@@ -4,29 +4,26 @@ import static com.killrvideo.service.comment.grpc.CommentsServiceGrpcValidator.i
 import static com.killrvideo.service.comment.grpc.CommentsServiceGrpcValidator.notEmpty;
 import static com.killrvideo.service.comment.grpc.CommentsServiceGrpcValidator.positive;
 import static com.killrvideo.service.comment.grpc.CommentsServiceGrpcValidator.validate;
-import static com.killrvideo.utils.GrpcMappingUtils.dateToTimestamp;
+import static com.killrvideo.utils.GrpcMappingUtils.instantToTimeStamp;
 import static com.killrvideo.utils.GrpcMappingUtils.uuidToTimeUuid;
 import static com.killrvideo.utils.GrpcMappingUtils.uuidToUuid;
 import static org.apache.commons.lang3.StringUtils.isBlank;
-
-import java.util.Optional;
-import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.springframework.util.Assert;
 
 import com.killrvideo.dse.dto.ResultListPage;
 import com.killrvideo.service.comment.dto.Comment;
 import com.killrvideo.service.comment.dto.QueryCommentByUser;
 import com.killrvideo.service.comment.dto.QueryCommentByVideo;
-
 import io.grpc.stub.StreamObserver;
+import java.util.Optional;
+import java.util.UUID;
 import killrvideo.comments.CommentsServiceOuterClass;
 import killrvideo.comments.CommentsServiceOuterClass.CommentOnVideoRequest;
 import killrvideo.comments.CommentsServiceOuterClass.GetUserCommentsRequest;
 import killrvideo.comments.CommentsServiceOuterClass.GetUserCommentsResponse;
 import killrvideo.comments.CommentsServiceOuterClass.GetVideoCommentsRequest;
 import killrvideo.comments.CommentsServiceOuterClass.GetVideoCommentsResponse;
+import org.slf4j.Logger;
+import org.springframework.util.Assert;
 
 /**
  * Validation of inputs and mapping
@@ -128,7 +125,7 @@ public class CommentsServiceGrpcMapper {
         return targetQuery;
     }
     
-    // Map from CommentDseDao response bean to expected GRPC object.
+    // Map from CommentDao response bean to expected GRPC object.
     public static GetVideoCommentsResponse mapFromDseVideoCommentToGrpcResponse(ResultListPage<Comment> dseRes) {
         final GetVideoCommentsResponse.Builder builder = GetVideoCommentsResponse.newBuilder();
         for (Comment c : dseRes.getResults()) {
@@ -137,14 +134,14 @@ public class CommentsServiceGrpcMapper {
                   .setComment(c.getComment())
                   .setUserId(uuidToUuid(c.getUserid()))
                   .setCommentId(uuidToTimeUuid(c.getCommentid()))
-                  .setCommentTimestamp(dateToTimestamp(c.getDateOfComment()))
+                  .setCommentTimestamp(instantToTimeStamp(c.getDateOfComment()))
                   .build());
         }
         dseRes.getPagingState().ifPresent(builder::setPagingState);
         return builder.build();
     }
     
-    // Map from CommentDseDao response bean to expected GRPC object.
+    // Map from CommentDao response bean to expected GRPC object.
     public static GetUserCommentsResponse mapFromDseUserCommentToGrpcResponse(ResultListPage<Comment> dseRes) {
         final GetUserCommentsResponse.Builder builder = GetUserCommentsResponse.newBuilder();
         for (Comment c : dseRes.getResults()) {
@@ -153,7 +150,7 @@ public class CommentsServiceGrpcMapper {
                    .setComment(c.getComment())
                    .setCommentId(uuidToTimeUuid(c.getCommentid()))
                    .setVideoId(uuidToUuid(c.getVideoid()))
-                   .setCommentTimestamp(dateToTimestamp(c.getDateOfComment()))
+                   .setCommentTimestamp(instantToTimeStamp(c.getDateOfComment()))
                    .build());
         }
         dseRes.getPagingState().ifPresent(builder::setPagingState);

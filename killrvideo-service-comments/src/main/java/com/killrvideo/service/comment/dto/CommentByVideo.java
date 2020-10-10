@@ -1,7 +1,7 @@
 package com.killrvideo.service.comment.dto;
 
 import com.killrvideo.model.CommonConstants;
-import com.killrvideo.service.comment.dao.CommentDseDao;
+import com.killrvideo.service.comment.dao.CommentDao;
 import java.util.UUID;
 import ma.markware.charybdis.model.annotation.Column;
 import ma.markware.charybdis.model.annotation.PartitionKey;
@@ -12,7 +12,7 @@ import ma.markware.charybdis.model.annotation.Table;
  *
  * @author DataStax Developer Advocates team.
  */
-@Table(name=CommentDseDao.TABLENAME_COMMENTS_BY_VIDEO,
+@Table(name= CommentDao.TABLENAME_COMMENTS_BY_VIDEO,
        keyspace=CommonConstants.KILLRVIDEO_KEYSPACE)
 public class CommentByVideo extends Comment {
     
