@@ -114,7 +114,7 @@ public class SearchDao extends DaoSupport {
     public CompletableFuture < ResultListPage<Video> > searchVideosAsync(String query, int fetchSize, Optional<String> pagingState) {
     	return FutureUtils.asCompletableFuture(dseSession.executeAsync(
     	        createStatementToSearchVideos(query, fetchSize, pagingState)))
-    	        .thenApply(rs -> new ResultListPage<Video>(rs, mapperVideo));
+    	        .thenApply(rs -> null);
     }
     
     /**
@@ -131,7 +131,8 @@ public class SearchDao extends DaoSupport {
      */
     public ResultListPage<Video> searchVideos(String query, int fetchSize, Optional<String> pagingState) {
     	BoundStatement stmt = createStatementToSearchVideos(query, fetchSize, pagingState);
-    	return new ResultListPage<Video>(dseSession.execute(stmt), mapperVideo);
+//    	return new ResultListPage<Video>(dseSession.execute(stmt), mapperVideo);
+      return null;
     }
     
     /**

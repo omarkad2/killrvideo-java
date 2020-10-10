@@ -113,7 +113,8 @@ public class SuggestedVideosDao extends DaoSupport implements KillrVideoTraversa
             return FutureUtils.asCompletableFuture(mapperVideo.mapAsync(dseSession.executeAsync(stmt)));
         });
         // so far I got a Result<Video> async, need to fetch only expected page and save paging state
-        return relatedVideosFuture.< ResultListPage<Video> > thenApply(ResultListPage::new);
+//        return relatedVideosFuture.< ResultListPage<Video> > thenApply(ResultListPage::new);
+        return null;
     }
     
     /**
