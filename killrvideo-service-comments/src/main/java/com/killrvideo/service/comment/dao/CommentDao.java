@@ -33,7 +33,7 @@ import org.springframework.util.Assert;
  * @author DataStax Developer Advocates team.
  */
 @Repository
-public abstract class CommentDao extends DaoSupport {
+public class CommentDao extends DaoSupport {
 
     private static Logger LOGGER = LoggerFactory.getLogger(CommentDao.class);
     

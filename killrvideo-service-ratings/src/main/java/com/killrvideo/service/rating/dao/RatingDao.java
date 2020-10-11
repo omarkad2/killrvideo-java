@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * @author DataStax Developer Advocates team.
  */
 @Repository("killrvideo.rating.dao.dse")
-public abstract class RatingDao extends DaoSupport {
+public class RatingDao extends DaoSupport {
 
 	/** Logger for that class. */
     private static Logger LOGGER = LoggerFactory.getLogger(RatingDao.class);

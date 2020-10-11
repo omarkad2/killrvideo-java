@@ -17,7 +17,7 @@ import org.springframework.util.Assert;
  * @author DataStax Developer Advocates team.
  */
 @Repository
-public abstract class StatisticsDao extends DaoSupport {
+public class StatisticsDao extends DaoSupport {
 
     /** Table Names. */
     public static final String TABLENAME_PLAYBACK_STATS = "video_playback_stats";

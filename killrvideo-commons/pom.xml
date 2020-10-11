@@ -38,24 +38,6 @@
       <artifactId>charybdis-core</artifactId>
     </dependency>
 
-    <!-- Java driver for DSE -->
-    <dependency>
-      <groupId>com.datastax.dse</groupId>
-      <artifactId>dse-java-driver-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.datastax.dse</groupId>
-      <artifactId>dse-java-driver-mapping</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.datastax.dse</groupId>
-      <artifactId>dse-java-driver-extras</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.datastax.dse</groupId>
-      <artifactId>dse-java-driver-graph</artifactId>
-    </dependency>
-
     <!--  Service Discovery -->
     <dependency>
       <groupId>com.xqbase</groupId>

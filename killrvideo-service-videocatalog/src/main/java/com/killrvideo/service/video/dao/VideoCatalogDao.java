@@ -41,7 +41,7 @@ import org.springframework.util.Assert;
  * @author DataStax Developer Advocates team.
  */
 @Repository
-public abstract class VideoCatalogDao extends DaoSupport {
+public class VideoCatalogDao extends DaoSupport {
 
   /**
    * Constants.

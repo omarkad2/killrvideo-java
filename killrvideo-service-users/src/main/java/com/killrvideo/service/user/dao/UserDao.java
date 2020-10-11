@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
  * @author DataStax Developer Advocates Team
  */
 @Repository
-public abstract class UserDao extends DaoSupport {
+public class UserDao extends DaoSupport {
 
     /** Logger for DAO. */
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
